@@ -1114,7 +1114,7 @@ namespace AgOpenGPS
             mf.trk.idx = -1;
         }
 
-        public void BuildOutGuidanceList(vec3 pivot)
+        /*public void BuildOutGuidanceList(vec3 pivot)
         {
             double minDistA = 1000000, minDistB;
 
@@ -1361,6 +1361,6 @@ namespace AgOpenGPS
                     }
                 }
             }
-        }
+        }*/
     }
 }
