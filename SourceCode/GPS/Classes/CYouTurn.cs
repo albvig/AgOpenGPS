@@ -2100,7 +2100,7 @@ namespace AgOpenGPS
             {
                 if (--turnSkips == 0)
                 {
-                    isYouTurnRight = !isYouTurnRight;
+                    if(!isOutSameCurve) isYouTurnRight = !isYouTurnRight;
                     turnSkips = rowSkipsWidth2 * 2 - 1;
                 }
                 else if (previousBigSkip = !previousBigSkip)
@@ -2108,7 +2108,7 @@ namespace AgOpenGPS
                 else
                     rowSkipsWidth = rowSkipsWidth2;
             }
-            else isYouTurnRight = !isYouTurnRight;
+            else if (!isOutSameCurve) isYouTurnRight = !isYouTurnRight;
 
             if (uTurnStyle == 0)
             {
