@@ -213,14 +213,16 @@ namespace AgOpenGPS
 
                         //creates half a circle starting at the crossing point
                         ytList.Clear();
-                        if (curveIndex >= mf.curve.curList.Count || curveIndex < 0)
+                        if (curveIndex >= mf.curve.curList.Count - 3 || curveIndex < 3)
                         {
                             FailCreate();
                             return false;
                         }
-                        vec3 currentPos = new vec3(mf.curve.curList[curveIndex]);
+
 
                         curveIndex += count;
+
+                        vec3 currentPos = new vec3(mf.curve.curList[curveIndex]);
 
                         if (!mf.curve.isHeadingSameWay) currentPos.heading += Math.PI;
                         if (currentPos.heading >= glm.twoPI) currentPos.heading -= glm.twoPI;
@@ -304,8 +306,8 @@ namespace AgOpenGPS
 
 
                 case 1:
-                    //build the next line
-                    /*double headCurve = mf.curve.curList[mf.curve.currentLocationIndex].heading;
+                    //build the next line to add sequencelines
+                    double headCurve = mf.curve.curList[mf.curve.currentLocationIndex].heading;
                     if (!mf.curve.isHeadingSameWay) headCurve += Math.PI;
                     if (headCurve > glm.twoPI) headCurve -= glm.twoPI;
 
@@ -335,17 +337,65 @@ namespace AgOpenGPS
                         double newdis = glm.Distance(nextCurve.curList[i], ytList[ytList.Count - 1]);
                         if (newdis > dis)
                         {
-                            if ((mf.curve.isHeadingSameWay && !isOutSameCurve) || (!mf.curve.isHeadingSameWay && isOutSameCurve)) outClosestTurnPt.curveIndex = i;
-                            else outClosestTurnPt.curveIndex = i + 1;
+                            if (mf.curve.isHeadingSameWay) outClosestTurnPt.curveIndex = i - 2;
+                            else outClosestTurnPt.curveIndex = i;
                             break;
                         }
                         else dis = newdis;
                     }
+                    outClosestTurnPt.closePt = new vec3(nextCurve.curList[outClosestTurnPt.curveIndex]);
+                    inClosestTurnPt.closePt = new vec3(mf.curve.curList[inClosestTurnPt.curveIndex]);
 
+                    if (!AddCurveSequenceLines()) return false;
 
-                    if (!AddCurveSequenceLines()) return false;*/
+                    //fill in the gaps
+                    double distanc;
+
+                    int cnt4 = ytList.Count;
+                    for (int i = 1; i < cnt4 - 2; i++)
+                    {
+                        int j = i + 1;
+                        if (j == cnt4 - 1) continue;
+                        distanc = glm.DistanceSquared(ytList[i], ytList[j]);
+                        if (distanc > 1)
+                        {
+                            vec3 pointB = new vec3((ytList[i].easting + ytList[j].easting) / 2.0,
+                                (ytList[i].northing + ytList[j].northing) / 2.0, ytList[i].heading);
+
+                            ytList.Insert(j, pointB);
+                            cnt4 = ytList.Count;
+                            i--;
+                        }
+                    }
+
+                    //calculate the new points headings based on fore and aft of point - smoother turns
+                    cnt4 = ytList.Count;
+                    vec3[] arr = new vec3[cnt4];
+                    cnt4 -= 2;
+                    ytList.CopyTo(arr);
+                    ytList.Clear();
+
+                    for (int i = 2; i < cnt4; i++)
+                    {
+                        vec3 pt3 = new vec3(arr[i]);
+                        pt3.heading = Math.Atan2(arr[i + 1].easting - arr[i - 1].easting,
+                            arr[i + 1].northing - arr[i - 1].northing);
+                        if (pt3.heading < 0) pt3.heading += glm.twoPI;
+                        ytList.Add(pt3);
+                    }
+
+                    //check to close
+                    if (glm.Distance(ytList[0], mf.pivotAxlePos) < 3)
+                    {
+                        FailCreate();
+                        return false;
+                    }
+
+                    isOutOfBounds = false;
                     youTurnPhase = 10;
-                    break;
+                    turnTooCloseTrigger = false;
+                    isTurnCreationTooClose = false;
+                    return true;
             }
             return true;
         }
@@ -1775,7 +1825,7 @@ namespace AgOpenGPS
                     }
                 }
             }
-        } 
+        }
 
         #endregion
 
@@ -1833,7 +1883,7 @@ namespace AgOpenGPS
             return true;
         }
 
-        //TODO: isnt working good for omegaturn....
+        //TODO: is for some reason making longer for omegaturn....
         private bool AddCurveSequenceLines()
         {
             //how many points striaght out
