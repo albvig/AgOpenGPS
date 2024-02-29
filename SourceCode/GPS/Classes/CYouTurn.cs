@@ -684,112 +684,107 @@ namespace AgOpenGPS
 
         private bool CreateABOmegaTurn(bool isTurnLeft)
         {
+            double head = mf.ABLine.abHeading;
+            if (!mf.ABLine.isHeadingSameWay) head += Math.PI;
+            if (head >= glm.twoPI) head -= glm.twoPI;
+
+            //we are doing an omega turn
+            switch (youTurnPhase)
             {
-                //we are doing an omega turn
-                switch (youTurnPhase)
-                {
-                    case 0:
-                        //how far are we from any turn boundary
-                        FindABTurnPoint(mf.pivotAxlePos);
+                case 0:
+                    //how far are we from any turn boundary
+                    FindABTurnPoint(mf.pivotAxlePos);
 
-                        //or did we lose the turnLine - we are on the highway cuz we left the outer/inner turn boundary
-                        if (closestTurnPt.turnLineIndex != -1)
+                    //or did we lose the turnLine - we are on the highway cuz we left the outer/inner turn boundary
+                    if (closestTurnPt.turnLineIndex != -1)
+                    {
+                        //calculate the distance to the turnline
+                        mf.distancePivotToTurnLine = glm.Distance(mf.pivotAxlePos, closestTurnPt.closePt);
+                    }
+                    else
+                    {
+                        //Full emergency stop code goes here, it thinks its auto turn, but its not!
+                        FailCreate();
+                        return false;
+                    }
+                    inClosestTurnPt = new CClose(closestTurnPt);
+
+                    CDubins dubYouTurnPath = new CDubins();
+                    CDubins.turningRadius = youTurnRadius;
+
+                    //grab the vehicle widths and offsets
+                    double turnOffset = (mf.tool.width - mf.tool.overlap) * rowSkipsWidth + (isYouTurnRight ? -mf.tool.offset * 2.0 : mf.tool.offset * 2.0);
+
+                    vec3 start = new vec3(inClosestTurnPt.closePt);
+                    start.heading = head;
+
+                    vec3 goal = new vec3(start);
+
+                    //now we go the other way to turn round
+                    double invertedHead = head - Math.PI;
+                    if (invertedHead < 0) invertedHead += glm.twoPI;
+                    if (invertedHead > glm.twoPI) invertedHead -= glm.twoPI;
+
+                    if (isTurnLeft)
+                    {
+                        goal.easting = goal.easting + (Math.Cos(-invertedHead) * turnOffset);
+                        goal.northing = goal.northing + (Math.Sin(-invertedHead) * turnOffset);
+                    }
+                    else
+                    {
+                        goal.easting = goal.easting - (Math.Cos(-invertedHead) * turnOffset);
+                        goal.northing = goal.northing - (Math.Sin(-invertedHead) * turnOffset);
+                    }
+
+                    goal.heading = invertedHead;
+
+                    //generate the turn points
+                    ytList = dubYouTurnPath.GenerateDubins(start, goal);
+                    isOutOfBounds = true;
+
+                    if (ytList.Count == 0)
+                    {
+                        FailCreate();
+                        return false;
+                    }
+
+                    youTurnPhase = 1;
+
+                    double distance;
+
+                    int cnt = ytList.Count;
+                    for (int i = 1; i < cnt - 2; i++)
+                    {
+                        distance = glm.DistanceSquared(ytList[i], ytList[i + 1]);
+                        if (distance < pointSpacing)
                         {
-                            //calculate the distance to the turnline
-                            mf.distancePivotToTurnLine = glm.Distance(mf.pivotAxlePos, closestTurnPt.closePt);
+                            ytList.RemoveAt(i + 1);
+                            i--;
+                            cnt = ytList.Count;
                         }
-                        else
-                        {
-                            //Full emergency stop code goes here, it thinks its auto turn, but its not!
-                            FailCreate();
-                            return false;
-                        }
-                        inClosestTurnPt = new CClose(closestTurnPt);
+                    }
 
-                        CDubins dubYouTurnPath = new CDubins();
-                        CDubins.turningRadius = youTurnRadius;
+                    return true;
 
-                        double head = mf.ABLine.abHeading;
-                        if (!mf.ABLine.isHeadingSameWay) head += Math.PI;
-                        if (head >= glm.twoPI) head -= glm.twoPI;
+                case 1:
+                    //move out
+                    ytList = MoveTurnInsideTurnLine(ytList, head, false, false);
 
-                        //grab the vehicle widths and offsets
-                        double turnOffset = (mf.tool.width - mf.tool.overlap) * rowSkipsWidth + (isYouTurnRight ? -mf.tool.offset * 2.0 : mf.tool.offset * 2.0);
-
-                        vec3 start = new vec3(inClosestTurnPt.closePt);
-                        start.heading = head;
-
-                        vec3 goal = new vec3(start);
-
-                        //now we go the other way to turn round
-                        double invertedHead = head - Math.PI;
-                        if (head < 0) invertedHead += glm.twoPI;
-                        if (head > glm.twoPI) invertedHead -= glm.twoPI;
-
-                        if (isTurnLeft)
-                        {
-                            goal.easting = goal.easting + (Math.Cos(-invertedHead) * turnOffset);
-                            goal.northing = goal.northing + (Math.Sin(-invertedHead) * turnOffset);
-                        }
-                        else
-                        {
-                            goal.easting = goal.easting - (Math.Cos(-invertedHead) * turnOffset);
-                            goal.northing = goal.northing - (Math.Sin(-invertedHead) * turnOffset);
-                        }
-
-                        goal.heading = invertedHead;
-
-                        //generate the turn points
-                        ytList = dubYouTurnPath.GenerateDubins(start, goal);
-
-                        if (ytList.Count == 0)
-                        {
-                            FailCreate();
-                            return false;
-                        }
-
-                        youTurnPhase = 1;
-
-                        //too many points from Dubins - so cut
-                        double pointSpacing = youTurnRadius * 0.1;
-
-                        double distance;
-
-                        int cnt = ytList.Count;
-                        for (int i = 1; i < cnt - 2; i++)
-                        {
-                            distance = glm.DistanceSquared(ytList[i], ytList[i + 1]);
-                            if (distance < pointSpacing)
-                            {
-                                ytList.RemoveAt(i + 1);
-                                i--;
-                                cnt = ytList.Count;
-                            }
-                        }
-
-                        return true;
-
-                    case 1:
-
-
-                        //move out
-                        ytList = MoveTurnInsideTurnLine(ytList, ytList[0].heading, false, false);
-
-                        if (ytList.Count == 0)
-                        {
-                            FailCreate();
-                            return false;
-                        }
-                        //AddABSequenceLines();
-                        isOutOfBounds = false;
-                        youTurnPhase = 10;
-                        turnTooCloseTrigger = false;
-                        isTurnCreationTooClose = false;
-                        return true;
-                }
-
-                return true;
+                    if (ytList.Count == 0)
+                    {
+                        FailCreate();
+                        return false;
+                    }
+                    //AddABSequenceLines();
+                    isOutOfBounds = false;
+                    youTurnPhase = 10;
+                    turnTooCloseTrigger = false;
+                    isTurnCreationTooClose = false;
+                    return true;
             }
+
+            return true;
+
         }
 
         private bool CreateABWideTurn(bool isTurnLeft)
@@ -882,6 +877,7 @@ namespace AgOpenGPS
                     nextLine = new CABLine(mf);
                     nextLine.BuildCurrentABLineList(mf.pivotAxlePos);
                     mf.guidanceLookPos = tempguidanceLookPos;
+                    isOutSameCurve = false;
 
                     //going with or against boundary?
                     bool isTurnLineSameWay = true;
@@ -914,7 +910,7 @@ namespace AgOpenGPS
                     ytList2.Add(pointPos);
 
                     //Taken from Dubbins
-                    while (Math.Abs(head - pointPos.heading) < Math.PI)
+                    while (Math.Abs(headie - pointPos.heading) < Math.PI)
                     {
                         //Update the position of the car
                         pointPos.easting += pointSpacing * Math.Sin(pointPos.heading);
@@ -985,6 +981,7 @@ namespace AgOpenGPS
                         //how many points from turnline do we add
                         int loops = Math.Abs(startClosestTurnPt.turnLineIndex - goalClosestTurnPt.turnLineIndex);
 
+                        //TODO: Generates error if trying to go around more than half of something...... Do we ever?
                         //are we crossing a border?
                         if (loops > (mf.bnd.bndList[startClosestTurnPt.turnLineNum].turnLine.Count / 2))
                         {
@@ -1235,8 +1232,8 @@ namespace AgOpenGPS
                 if (res2 == 1)
                 {
                     double hed;
-                    if (isHeadingSameWay) hed = Math.Atan2(mf.pivotAxlePos.easting - iE, mf.pivotAxlePos.northing - iN);
-                    else hed = Math.Atan2(iE - mf.pivotAxlePos.easting, iN - mf.pivotAxlePos.northing);
+                    if (mf.ABLine.isHeadingSameWay) hed = Math.Atan2(mf.ABLine.rEastAB - iE, mf.ABLine.rNorthAB - iN);
+                    else hed = Math.Atan2(iE - mf.ABLine.rEastAB, iN - mf.ABLine.rNorthAB);
                     if (hed < 0) hed += glm.twoPI;
                     hed = Math.Round(hed, 3);
                     double hedAB = Math.Round(thisCurve.abHeading, 3);
@@ -1438,6 +1435,7 @@ namespace AgOpenGPS
                             mf.bnd.bndList[j].turnLine[i + 1].northing - mf.bnd.bndList[j].turnLine[i].northing);
                         if (hed < 0) hed += glm.twoPI;
                         cClose.closePt.heading = hed;
+                        cClose.turnLineHeading = mf.bnd.bndList[j].turnLine[i].heading;
                         cClose.turnLineNum = j;
                         cClose.turnLineIndex = i;
 
