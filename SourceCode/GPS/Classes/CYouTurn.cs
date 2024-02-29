@@ -2174,6 +2174,9 @@ namespace AgOpenGPS
             pt3Phase = 0;
             mf.p_239.pgn[mf.p_239.uturn] = 0;
             isOutSameCurve = false;
+            nextCurve = null;
+            nextLine = null;
+
         }
 
         public void BuildManualYouLateral(bool isTurnLeft)
@@ -2597,46 +2600,61 @@ namespace AgOpenGPS
         //Duh.... What does this do....
         public void DrawYouTurn()
         {
-            GL.PointSize(12.0f);
+            /*GL.PointSize(12.0f);
             GL.Begin(PrimitiveType.Points);
             GL.Color3(0.95f, 0.73f, 1.0f);
             GL.Vertex3(inClosestTurnPt.closePt.easting, inClosestTurnPt.closePt.northing, 0);
             GL.Color3(0.395f, 0.925f, 0.30f);
             GL.Vertex3(outClosestTurnPt.closePt.easting, outClosestTurnPt.closePt.northing, 0);
             GL.End();
-            GL.PointSize(1.0f);
+            GL.PointSize(1.0f);*/
 
             int ptCount = ytList.Count;
             if (ptCount < 3) return;
 
-            GL.PointSize(mf.ABLine.lineWidth + 2);
-
-            if (isYouTurnTriggered)
-                GL.Color3(0.95f, 0.5f, 0.95f);
-            else if (isOutOfBounds)
-                GL.Color3(0.9495f, 0.395f, 0.325f);
-            else
-                GL.Color3(0.395f, 0.925f, 0.30f);
-
-            GL.Begin(PrimitiveType.Points);
-            for (int i = 0; i < ptCount; i++)
+            if (youTurnPhase == 10 || youTurnPhase == 11)
             {
-                GL.Vertex3(ytList[i].easting, ytList[i].northing, 0);
-            }
-            GL.End();
-
-            if (nextCurve != null)
-            {
-                GL.Begin(PrimitiveType.Points);
-                GL.Color3(0.95f, 0.41f, 0.980f);
-                for (int i = 0; i < nextCurve.curList.Count; i++)
+                GL.Color3(0.81f, 0.34f, 0.88f);
+                if (nextCurve != null && !isOutSameCurve)
                 {
-                    GL.Vertex3(nextCurve.curList[i].easting, nextCurve.curList[i].northing, 0);
+                    GL.PointSize(2);
+                    GL.Begin(PrimitiveType.Points);
+                    for (int i = 0; i < nextCurve.curList.Count; i++)
+                    {
+                        GL.Vertex3(nextCurve.curList[i].easting, nextCurve.curList[i].northing, 0);
+                    }
+                    GL.End();
+                }
+
+                if (nextLine != null && !isOutSameCurve)
+                {
+                    GL.LineWidth(1);
+                    GL.Begin(PrimitiveType.Lines);
+                    GL.Vertex3(nextLine.currentLinePtA.easting, nextLine.currentLinePtA.northing, 0.0);
+                    GL.Vertex3(nextLine.currentLinePtB.easting, nextLine.currentLinePtB.northing, 0.0);
+                    GL.End();
+
+                    GL.Color3(0.2f, 0.950f, 0.20f);
+                }
+
+                GL.PointSize(mf.ABLine.lineWidth + 2);
+                if (isYouTurnTriggered)
+                    GL.Color3(0.95f, 0.5f, 0.95f);
+                else if (isOutOfBounds)
+                    GL.Color3(0.9495f, 0.395f, 0.325f);
+                else
+                    GL.Color3(0.395f, 0.925f, 0.30f);
+
+                GL.Begin(PrimitiveType.Points);
+                for (int i = 0; i < ptCount; i++)
+                {
+                    GL.Vertex3(ytList[i].easting, ytList[i].northing, 0);
                 }
                 GL.End();
+
             }
 
-            if (ytList2?.Count > 0)
+            /*if (ytList2?.Count > 0)
             {
                 GL.PointSize(mf.ABLine.lineWidth + 2);
                 GL.Color3(0.3f, 0.941f, 0.980f);
@@ -2646,7 +2664,7 @@ namespace AgOpenGPS
                     GL.Vertex3(ytList2[i].easting, ytList2[i].northing, 0);
                 }
                 GL.End();
-            }
+            }*/
         }
 
         public class CClose
