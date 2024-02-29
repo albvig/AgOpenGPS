@@ -304,9 +304,8 @@ namespace AgOpenGPS
 
 
                 case 1:
-                    //TODO: is this following the curve line?
                     //build the next line
-                    double headCurve = mf.curve.curList[mf.curve.currentLocationIndex].heading;
+                    /*double headCurve = mf.curve.curList[mf.curve.currentLocationIndex].heading;
                     if (!mf.curve.isHeadingSameWay) headCurve += Math.PI;
                     if (headCurve > glm.twoPI) headCurve -= glm.twoPI;
 
@@ -344,7 +343,7 @@ namespace AgOpenGPS
                     }
 
 
-                    if (!AddCurveSequenceLines()) return false;
+                    if (!AddCurveSequenceLines()) return false;*/
                     youTurnPhase = 10;
                     break;
             }
