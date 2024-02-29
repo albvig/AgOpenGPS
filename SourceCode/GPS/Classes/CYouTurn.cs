@@ -1842,7 +1842,7 @@ namespace AgOpenGPS
             if (outhead > glm.twoPI) outhead -= glm.twoPI;
 
             //how many points striaght out
-            double lenny = 9;
+            double lenny = youTurnStartOffset * 0.55;
 
             vec3 pt;
             for (int a = 0; a < lenny; a++)
@@ -1886,7 +1886,7 @@ namespace AgOpenGPS
         private bool AddCurveSequenceLines()
         {
             //how many points striaght out
-            double lenny = 7;
+            double lenny = youTurnStartOffset * 0.35;
             bool sameWay = mf.curve.isHeadingSameWay;
             int a = sameWay ? -1 : 1;
 
