@@ -781,7 +781,7 @@ namespace AgOpenGPS
             {
                 case 0:
                     //how far are we from any turn boundary
-                    FindABTurnPoint(new vec3(mf.ABLine.rEastAB, mf.ABLine.rNorthAB, head));
+                    FindABTurnPoint(new vec3(mf.ABLine.goalPointAB.easting, mf.ABLine.goalPointAB.northing, head));
 
                     //or did we lose the turnLine - we are on the highway cuz we left the outer/inner turn boundary
                     if (closestTurnPt.turnLineIndex != -1)
@@ -894,7 +894,7 @@ namespace AgOpenGPS
             {
                 case 0:
                     //grab the pure pursuit point right on ABLine
-                    vec3 onPurePoint = new vec3(mf.ABLine.rEastAB, mf.ABLine.rNorthAB, 0);
+                    vec3 onPurePoint = new vec3(mf.ABLine.goalPointAB.easting, mf.ABLine.goalPointAB.northing, 0);
 
                     //how far are we from any turn boundary
                     FindABTurnPoint(onPurePoint);
