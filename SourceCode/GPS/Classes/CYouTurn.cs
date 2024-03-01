@@ -811,15 +811,15 @@ namespace AgOpenGPS
                 int count = mf.curve.isHeadingSameWay ? -1 : 1;
                 int curveIndex = inClosestTurnPt.curveIndex + count;
 
-                bool pointOutOfBnd = true;
+                isOutOfBounds = true;
                 int stopIfWayOut = 0;
 
                 double head = 0;
 
-                while (pointOutOfBnd)
+                while (isOutOfBounds)
                 {
                     stopIfWayOut++;
-                    pointOutOfBnd = false;
+                    isOutOfBounds = false;
 
                     //creates half a circle starting at the crossing point
                     ytList.Clear();
@@ -857,14 +857,14 @@ namespace AgOpenGPS
                     {
                         if (mf.bnd.IsPointInsideTurnArea(ytList[i]) != 0)
                         {
-                            pointOutOfBnd = true;
+                            isOutOfBounds = true;
                             break;
                         }
                     }
                 }
 
                 //move out
-                head = ytList[0].heading;
+                /*head = ytList[0].heading;
                 double cosHead = Math.Cos(head) * 0.1;
                 double sinHead = Math.Sin(head) * 0.1;
                 vec3[] arr2 = new vec3[ytList.Count];
@@ -903,7 +903,10 @@ namespace AgOpenGPS
                     }
                 }
 
-                ytList.AddRange(arr2);
+                ytList.AddRange(arr2);*/
+
+                ytList = MoveTurnInsideTurnLine(ytList, ytList[0].heading, false, false);
+                int j;
 
                 //add start extension from curve points
                 curveIndex -= count;
@@ -1419,7 +1422,6 @@ namespace AgOpenGPS
             {
                 isOutOfBounds = true;
 
-
                 //timer.Start();
                 //grab the pure pursuit point right on ABLine
                 vec3 onPurePoint = new vec3(mf.ABLine.rEastAB, mf.ABLine.rNorthAB, 0);
@@ -1480,7 +1482,7 @@ namespace AgOpenGPS
                 ytList = MoveTurnInsideTurnLine(ytList, head, false, false);
 
                 //if it couldn't be done this will trigger
-                if (ytList.Count < 5 || semiCircleIndex == -1)
+                if (ytList.Count == 0)
                 {
                     FailCreate();
                     return false;
