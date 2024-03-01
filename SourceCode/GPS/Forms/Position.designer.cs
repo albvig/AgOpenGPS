@@ -964,7 +964,7 @@ namespace AgOpenGPS
                                 {
                                     yt.BuildABLineDubinsYouTurn(yt.isYouTurnRight);
                                 }
-                                else yt.BuildCurveDubinsYouTurn(yt.isYouTurnRight, pivotAxlePos);
+                                else yt.BuildCurveDubinsYouTurn(yt.isYouTurnRight);
                             }
 
                             if (yt.uTurnStyle == 0 && yt.youTurnPhase == 10)
