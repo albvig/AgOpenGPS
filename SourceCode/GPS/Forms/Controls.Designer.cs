@@ -1799,7 +1799,7 @@ namespace AgOpenGPS
         {
             yt.rowSkipsWidth = cboxpRowWidth.SelectedIndex + 1;
             yt.Set_Alternate_skips();
-            yt.ResetCreatedYouTurn();
+            if (!yt.isYouTurnTriggered) yt.ResetCreatedYouTurn();
             Properties.Settings.Default.set_youSkipWidth = yt.rowSkipsWidth;
             Properties.Settings.Default.Save();
         }

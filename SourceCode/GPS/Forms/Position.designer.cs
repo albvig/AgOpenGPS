@@ -958,7 +958,7 @@ namespace AgOpenGPS
                             {
                                 yt.ResetCreatedYouTurn();
                             }
-                            else
+                            else if (crossTrackError < 400 || yt.youTurnPhase != 0)
                             {
                                 if (trk.gArr[trk.idx].mode == (int)TrackMode.AB)
                                 {
@@ -998,7 +998,7 @@ namespace AgOpenGPS
                                 sounds.isBoundAlarming = false;
                             }
 
-                            if (isBtnAutoSteerOn && guidanceLineDistanceOff > 300 && !yt.isYouTurnTriggered)
+                            if (isBtnAutoSteerOn && (guidanceLineDistanceOff > 500 || guidanceLineDistanceOff < -500)  && !yt.isYouTurnTriggered)
                             {
                                 yt.ResetCreatedYouTurn();
                             }
