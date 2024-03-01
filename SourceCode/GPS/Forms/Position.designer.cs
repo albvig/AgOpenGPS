@@ -944,7 +944,9 @@ namespace AgOpenGPS
                 }
                 else //Youturn is on
                 {
-                    bool isInTurnBounds = bnd.IsPointInsideTurnArea(pivotAxlePos) != -1;
+                    bool isInTurnBounds;
+                    if (trk.gArr[trk.idx].mode == (int)TrackMode.AB) isInTurnBounds = bnd.IsPointInsideTurnArea(pivotAxlePos) != -1;
+                    else isInTurnBounds = bnd.IsPointInsideTurnArea(pivotAxlePos) != -1 && bnd.IsPointInsideTurnArea(curve.curList[curve.currentLocationIndex]) == 0;
                     //Are we inside outer and outside inner all turn boundaries, no turn creation problems
                     //if we are too much off track > 1.3m, kill the diagnostic creation, start again
                     //if (!yt.isYouTurnTriggered) 
