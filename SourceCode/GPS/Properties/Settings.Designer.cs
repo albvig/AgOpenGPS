@@ -2880,6 +2880,8 @@ namespace AgOpenGPS.Properties {
             set
             {
                 this["set_sectionButtonsHeight"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
