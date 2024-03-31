@@ -1311,7 +1311,7 @@
             this.tabSummary.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.tabSummary.Location = new System.Drawing.Point(4, 44);
             this.tabSummary.Name = "tabSummary";
-            this.tabSummary.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabSummary.Padding = new System.Windows.Forms.Padding(3);
             this.tabSummary.Size = new System.Drawing.Size(854, 584);
             this.tabSummary.TabIndex = 0;
             this.tabSummary.Text = "tSum";
@@ -3797,7 +3797,7 @@
             this.tabToolPivot.Controls.Add(this.rbtnPivotAheadNeg);
             this.tabToolPivot.Location = new System.Drawing.Point(4, 44);
             this.tabToolPivot.Name = "tabToolPivot";
-            this.tabToolPivot.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabToolPivot.Padding = new System.Windows.Forms.Padding(3);
             this.tabToolPivot.Size = new System.Drawing.Size(854, 584);
             this.tabToolPivot.TabIndex = 27;
             this.tabToolPivot.Text = "tPivot";
@@ -6826,7 +6826,7 @@
             this.tabRelay.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.tabRelay.Location = new System.Drawing.Point(4, 44);
             this.tabRelay.Name = "tabRelay";
-            this.tabRelay.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabRelay.Padding = new System.Windows.Forms.Padding(3);
             this.tabRelay.Size = new System.Drawing.Size(854, 584);
             this.tabRelay.TabIndex = 24;
             this.tabRelay.Text = "aRelay";
@@ -8602,7 +8602,7 @@
             this.nudlessNumericUpDown1.InterceptArrowKeys = false;
             this.nudlessNumericUpDown1.Location = new System.Drawing.Point(415, 207);
             this.nudlessNumericUpDown1.Maximum = new decimal(new int[] {
-            75,
+            150,
             0,
             0,
             0});
@@ -9312,7 +9312,7 @@
             this.tabDisplay.Controls.Add(this.chkDisplayExtraGuides);
             this.tabDisplay.Location = new System.Drawing.Point(4, 44);
             this.tabDisplay.Name = "tabDisplay";
-            this.tabDisplay.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabDisplay.Padding = new System.Windows.Forms.Padding(3);
             this.tabDisplay.Size = new System.Drawing.Size(854, 584);
             this.tabDisplay.TabIndex = 25;
             this.tabDisplay.Text = "fDisp";
@@ -9921,11 +9921,11 @@
             this.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormConfig";
-            this.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Padding = new System.Windows.Forms.Padding(4);
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
