@@ -475,7 +475,7 @@ namespace AgOpenGPS
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
             { Directory.CreateDirectory(directoryName); }
 
-            string filename = directoryName + "\\HeadLines.txt";
+            string filename = directoryName + "\\Headlines.txt";
 
             int cnt = hdl.tracksArr.Count;
 
@@ -541,13 +541,13 @@ namespace AgOpenGPS
             if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
             { Directory.CreateDirectory(directoryName); }
 
-            string filename = directoryName + "\\HeadLines.txt";
+            string filename = directoryName + "\\Headlines.txt";
 
             if (!File.Exists(filename))
             {
                 using (StreamWriter writer = new StreamWriter(filename))
                 {
-                    writer.WriteLine("$HeadLines");
+                    writer.WriteLine("$Headlines");
                 }
             }
 
@@ -557,7 +557,7 @@ namespace AgOpenGPS
 
             if (!File.Exists(filename))
             {
-                TimedMessageBox(2000, gStr.gsFileError, "Missing HeadLines File");
+                TimedMessageBox(2000, gStr.gsFileError, "Missing Headlines File");
             }
             else
             {
@@ -628,13 +628,13 @@ namespace AgOpenGPS
                         if ((directoryName.Length > 0) && (!Directory.Exists(directoryName)))
                         { Directory.CreateDirectory(directoryName); }
 
-                        filename = directoryName + "\\HeadLines.txt";
+                        filename = directoryName + "\\Headlines.txt";
 
                         using (StreamWriter writer = new StreamWriter(filename, false))
                         {
                             try
                             {
-                                writer.WriteLine("$HeadLines");
+                                writer.WriteLine("$Headlines");
                                 return;
 
                             }
@@ -825,12 +825,7 @@ namespace AgOpenGPS
                 }
             }
 
-            if (trk.gArr.Count == 0)
-            {
-                trk.idx = -1;
-            }
-
-            if (trk.idx > (trk.gArr.Count - 1)) trk.idx = trk.gArr.Count - 1;
+            trk.idx = -1;
         }
 
         public void FileSaveCurveLines()
@@ -2011,6 +2006,8 @@ namespace AgOpenGPS
 
                 writer.WriteLine("StartFix");
                 writer.WriteLine(pn.latitude.ToString(CultureInfo.InvariantCulture) + "," + pn.longitude.ToString(CultureInfo.InvariantCulture));
+
+                writer.WriteLine("Latitude,Longitude,Elevation,Quality,Easting,Northing,Heading,Roll");
             }
         }
 
@@ -2134,7 +2131,7 @@ namespace AgOpenGPS
             }
         }
 
-        //save the contour points which include elevation values
+        //save the contour points
         public void FileSaveContour()
         {
             //1  - points in patch
@@ -2611,9 +2608,9 @@ namespace AgOpenGPS
         {
             using (StreamWriter writer = new StreamWriter((fieldsDirectory + currentFieldDirectory + "\\Elevation.txt"), true))
             {
-                writer.Write(sbFix.ToString());
+                writer.Write(sbGrid.ToString());
             }
-            sbFix.Clear();
+            sbGrid.Clear();
         }
 
         //generate KML file from flag

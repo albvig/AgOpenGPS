@@ -6,6 +6,7 @@ namespace AgOpenGPS
     {
         //sound objects - wave files in resources
         public readonly SoundPlayer sndBoundaryAlarm = new SoundPlayer(Properties.Resources.Alarm10);
+        public readonly SoundPlayer sndUTurnTooClose = new SoundPlayer(Properties.Resources.TF012);
 
         public readonly SoundPlayer sndAutoSteerOn = new SoundPlayer(Properties.Resources.SteerOn);
         public readonly SoundPlayer sndAutoSteerOff = new SoundPlayer(Properties.Resources.SteerOff);
@@ -17,7 +18,7 @@ namespace AgOpenGPS
 
         public bool isBoundAlarming, isRTKAlarming;
 
-        public bool isSteerSoundOn, isTurnSoundOn, isHydLiftSoundOn;
+        public bool isSteerSoundOn, isTurnSoundOn, isHydLiftSoundOn, isSectionsSoundOn;
 
         public bool isHydLiftChange;
 
@@ -26,6 +27,7 @@ namespace AgOpenGPS
             isSteerSoundOn = Properties.Settings.Default.setSound_isAutoSteerOn;
             isHydLiftSoundOn = Properties.Settings.Default.setSound_isHydLiftOn;
             isTurnSoundOn = Properties.Settings.Default.setSound_isUturnOn;
+            isSectionsSoundOn = Properties.Settings.Default.setSound_isSectionsOn;
         }
     }
 }

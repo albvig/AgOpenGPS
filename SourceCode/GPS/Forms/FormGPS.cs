@@ -16,7 +16,6 @@ using System.Media;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Resources;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace AgOpenGPS
@@ -64,7 +63,7 @@ namespace AgOpenGPS
         public bool isJobStarted = false, isBtnAutoSteerOn, isLidarBtnOn = true;
 
         //if we are saving a file
-        public bool isSavingFile = false, isLogNMEA = false, isLogElevation = false;
+        public bool isSavingFile = false, isLogNMEA = false;
 
         //texture holders
         public uint[] texture;
@@ -256,7 +255,6 @@ namespace AgOpenGPS
 
         #endregion // Class Props and instances
 
-
         public FormGPS()
         {
             //winform initialization
@@ -368,11 +366,6 @@ namespace AgOpenGPS
             panelSim.Left = Width/2 -330;
             panelSim.Width = 700;
             panelSim.Top = Height - 60;
-
-            timer2.Enabled = true;
-
-            pictureboxStart.BringToFront();
-            pictureboxStart.Dock = System.Windows.Forms.DockStyle.Fill;
 
             //set the language to last used
             SetLanguage(Settings.Default.setF_culture, false);
@@ -542,13 +535,6 @@ namespace AgOpenGPS
                         }
                     }
                 }
-            }
-
-            DateTime dt2 = new DateTime(2024, 02, 13);
-            if (DateTime.Now > dt2)
-            {
-                //YesMessageBox("This version is expired");
-                //Environment.Exit(0);
             }
         }
 
@@ -727,7 +713,8 @@ namespace AgOpenGPS
             NoGPS, ZoomIn48, ZoomOut48, 
             Pan, MenuHideShow, 
             ToolWheels, Tire, TramDot,
-            RateMap1, RateMap2, RateMap3
+            RateMap1, RateMap2, RateMap3, 
+            YouTurnU, YouTurnH
         }
 
         public void LoadGLTextures()
@@ -748,7 +735,8 @@ namespace AgOpenGPS
                 Resources.z_NoGPS, Resources.ZoomIn48, Resources.ZoomOut48, 
                 Resources.Pan, Resources.MenuHideShow,
                 Resources.z_Tool, Resources.z_Tire, Resources.z_TramOnOff, 
-                Resources.z_RateMap1, Resources.z_RateMap2, Resources.z_RateMap3
+                Resources.z_RateMap1, Resources.z_RateMap2, Resources.z_RateMap3,
+                Resources.YouTurnU, Resources.YouTurnH
             };
 
             texture = new uint[oglTextures.Length];
@@ -766,16 +754,6 @@ namespace AgOpenGPS
                     GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, 9729);
                 }
             }
-        }
-
-        //make the start picture disappear
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            this.Controls.Remove(pictureboxStart);
-            pictureboxStart.Dispose();
-            //panel1.SendToBack();
-            timer2.Enabled = false;
-            timer2.Dispose();
         }
 
         public bool KeypadToNUD(NudlessNumericUpDown sender, Form owner)
@@ -909,7 +887,7 @@ namespace AgOpenGPS
             this.menustripLanguage.Enabled = false;
             panelRight.Enabled = true;
             //boundaryToolStripBtn.Enabled = true;
-            isPanelABHidden = false;
+            isPanelBottomHidden = false;
 
             FieldMenuButtonEnableDisable(true);
             PanelUpdateRightAndBottom();
@@ -927,6 +905,8 @@ namespace AgOpenGPS
             recPath.resumeState = 0;
             btnResumePath.Image = Properties.Resources.pathResumeStart;
             recPath.currentPositonIndex = 0;
+
+            sbGrid.Clear();
 
             //reset field offsets
             if (!isKeepOffsetsOn)
@@ -1110,7 +1090,7 @@ namespace AgOpenGPS
             recPath.shortestDubinsList?.Clear();
             recPath.shuttleDubinsList?.Clear();
             
-            isPanelABHidden = false;
+            isPanelBottomHidden = false;
 
             PanelsAndOGLSize();
             SetZoom();

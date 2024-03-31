@@ -128,7 +128,7 @@ namespace AgOpenGPS
 
             isHeadingSameWay = Math.PI - Math.Abs(Math.Abs(pivot.heading - abHeading) - Math.PI) < glm.PIBy2;
 
-            if (mf.yt.isYouTurnTriggered) isHeadingSameWay = !isHeadingSameWay;
+            if (mf.yt.isYouTurnTriggered && !mf.yt.isGoingStraightThrough) isHeadingSameWay = !isHeadingSameWay;
 
             //Which ABLine is the vehicle on, negative is left and positive is right side
             double RefDist = (distanceFromRefLine + (isHeadingSameWay ? mf.tool.offset : -mf.tool.offset)) / widthMinusOverlap ;
@@ -143,20 +143,27 @@ namespace AgOpenGPS
 
             //move the curline as well. 
             vec2 nudgePtA = new vec2(mf.trk.gArr[idx].ptA);
+            vec2 nudgePtB = new vec2(mf.trk.gArr[idx].ptB);
 
             nudgePtA.easting += (Math.Sin(abHeading + glm.PIBy2) * mf.trk.gArr[idx].nudgeDistance);
             nudgePtA.northing += (Math.Cos(abHeading + glm.PIBy2) * mf.trk.gArr[idx].nudgeDistance);
+
+            nudgePtB.easting += (Math.Sin(abHeading + glm.PIBy2) * mf.trk.gArr[idx].nudgeDistance);
+            nudgePtB.northing += (Math.Cos(abHeading + glm.PIBy2) * mf.trk.gArr[idx].nudgeDistance);
 
             //depending which way you are going, the offset can be either side
             vec2 point1 = new vec2((Math.Cos(-abHeading) * (distAway + (isHeadingSameWay ? -mf.tool.offset : mf.tool.offset))) + nudgePtA.easting,
             (Math.Sin(-abHeading) * (distAway + (isHeadingSameWay ? -mf.tool.offset : mf.tool.offset))) + nudgePtA.northing);
 
+            vec2 point2 = new vec2((Math.Cos(-abHeading) * (distAway + (isHeadingSameWay ? -mf.tool.offset : mf.tool.offset))) + nudgePtB.easting,
+            (Math.Sin(-abHeading) * (distAway + (isHeadingSameWay ? -mf.tool.offset : mf.tool.offset))) + nudgePtB.northing);
+
             //create the new line extent points for current ABLine based on original heading of AB line
             currentLinePtA.easting = point1.easting - (Math.Sin(abHeading) * abLength);
             currentLinePtA.northing = point1.northing - (Math.Cos(abHeading) * abLength);
 
-            currentLinePtB.easting = point1.easting + (Math.Sin(abHeading) * abLength);
-            currentLinePtB.northing = point1.northing + (Math.Cos(abHeading) * abLength);
+            currentLinePtB.easting = point2.easting + (Math.Sin(abHeading) * abLength);
+            currentLinePtB.northing = point2.northing + (Math.Cos(abHeading) * abLength);
 
             currentLinePtA.heading = abHeading;
             currentLinePtB.heading = abHeading;
@@ -368,20 +375,6 @@ namespace AgOpenGPS
                 mf.font.DrawText3D(desPtB.easting, desPtB.northing, "&B");
         }
 
-        public void DrawProposed(int i)
-        {
-            GL.LineWidth(4);
-            GL.Color3(0.30f, 0.972f, 0.32f);
-            GL.Begin(PrimitiveType.Lines);
-            {
-                GL.Vertex3(mf.trk.gArr[i].ptA.easting - (Math.Sin(mf.trk.gArr[i].heading) * abLength), 
-                    mf.trk.gArr[i].ptA.northing - (Math.Cos(mf.trk.gArr[i].heading) * abLength), 0);
-                GL.Vertex3(mf.trk.gArr[i].ptB.easting + (Math.Sin(mf.trk.gArr[i].heading) * abLength),
-                    mf.trk.gArr[i].ptB.northing + (Math.Cos(mf.trk.gArr[i].heading) * abLength), 0);
-            }
-            GL.End();
-        }
-
         public void DrawABLines()
         {
             //Draw AB Points
@@ -577,9 +570,10 @@ namespace AgOpenGPS
             double hsin = Math.Sin(abHeading);
             double hcos = Math.Cos(abHeading);
 
+            double len = glm.Distance(mf.trk.gArr[mf.trk.idx].endPtA, mf.trk.gArr[mf.trk.idx].endPtB);
             //divide up the AB line into segments
             vec2 P1 = new vec2();
-            for (int i = 0; i < 3200; i += 4)
+            for (int i = 0; i < (int)len; i += 4)
             {
                 P1.easting = (hsin * i) + mf.trk.gArr[mf.trk.idx].endPtA.easting;
                 P1.northing = (hcos * i) + mf.trk.gArr[mf.trk.idx].endPtA.northing;
