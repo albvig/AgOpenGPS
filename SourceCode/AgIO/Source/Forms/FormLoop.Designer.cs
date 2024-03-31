@@ -51,6 +51,7 @@ namespace AgIO
             this.toolStripSerialMonitor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEthernet = new System.Windows.Forms.ToolStripMenuItem();
             this.deviceManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btComPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsMenuStrip = new System.Windows.Forms.ToolStripDropDownButton();
             this.saveToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -279,7 +280,8 @@ namespace AgIO
             this.toolStripUDPMonitor,
             this.toolStripSerialMonitor,
             this.toolStripEthernet,
-            this.deviceManagerToolStripMenuItem});
+            this.deviceManagerToolStripMenuItem,
+            this.btComPortToolStripMenuItem});
             this.toolStripDropDownButton1.Image = global::AgIO.Properties.Resources.Settings48;
             this.toolStripDropDownButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -340,6 +342,15 @@ namespace AgIO
             this.deviceManagerToolStripMenuItem.Size = new System.Drawing.Size(296, 70);
             this.deviceManagerToolStripMenuItem.Text = "Device Manager";
             this.deviceManagerToolStripMenuItem.Click += new System.EventHandler(this.deviceManagerToolStripMenuItem_Click);
+            // 
+            // btComPortToolStripMenuItem
+            // 
+            this.btComPortToolStripMenuItem.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btComPortToolStripMenuItem.Image = global::AgIO.Properties.Resources.EthernetSetup;
+            this.btComPortToolStripMenuItem.Name = "btComPortToolStripMenuItem";
+            this.btComPortToolStripMenuItem.Size = new System.Drawing.Size(296, 70);
+            this.btComPortToolStripMenuItem.Text = "Bluetooth Ports";
+            this.btComPortToolStripMenuItem.Click += new System.EventHandler(this.btComPortToolStripMenuItem_Click);
             // 
             // settingsMenuStrip
             // 
@@ -1217,7 +1228,7 @@ namespace AgIO
         private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.ToolStripMenuItem toolStripSerialMonitor;
         private System.Windows.Forms.ToolStripMenuItem toolStripUDPMonitor;
-        private System.Windows.Forms.Button btnGPS_Out;
+        private System.Windows.Forms.ToolStripMenuItem btComPortToolStripMenuItem;
     }
 }
 
