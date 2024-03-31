@@ -546,6 +546,7 @@
             this.hsbarAckerman.TabIndex = 331;
             this.hsbarAckerman.Value = 100;
             this.hsbarAckerman.ValueChanged += new System.EventHandler(this.hsbarAckerman_ValueChanged);
+            this.hsbarAckerman.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarAckerman_HelpRequested);
             // 
             // hsbarMaxSteerAngle
             // 
@@ -558,6 +559,7 @@
             this.hsbarMaxSteerAngle.TabIndex = 299;
             this.hsbarMaxSteerAngle.Value = 10;
             this.hsbarMaxSteerAngle.ValueChanged += new System.EventHandler(this.hsbarMaxSteerAngle_ValueChanged);
+            this.hsbarMaxSteerAngle.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarMaxSteerAngle_HelpRequested);
             // 
             // lblAckerman
             // 
@@ -616,6 +618,7 @@
             this.btnZeroWAS.TabIndex = 323;
             this.btnZeroWAS.UseVisualStyleBackColor = true;
             this.btnZeroWAS.Click += new System.EventHandler(this.btnZeroWAS_Click);
+            this.btnZeroWAS.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnZeroWAS_HelpRequested);
             // 
             // hsbarCountsPerDegree
             // 
@@ -628,6 +631,7 @@
             this.hsbarCountsPerDegree.TabIndex = 304;
             this.hsbarCountsPerDegree.Value = 20;
             this.hsbarCountsPerDegree.ValueChanged += new System.EventHandler(this.hsbarCountsPerDegree_ValueChanged);
+            this.hsbarCountsPerDegree.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarCountsPerDegree_HelpRequested);
             // 
             // label10
             // 
@@ -662,6 +666,7 @@
             this.hsbarWasOffset.SmallChange = 2;
             this.hsbarWasOffset.TabIndex = 294;
             this.hsbarWasOffset.ValueChanged += new System.EventHandler(this.hsbarSteerAngleSensorZero_ValueChanged);
+            this.hsbarWasOffset.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarWasOffset_HelpRequested);
             // 
             // lblSteerAngleSensorZero
             // 
@@ -753,18 +758,19 @@
             this.hsbarMinPWM.TabIndex = 284;
             this.hsbarMinPWM.Value = 10;
             this.hsbarMinPWM.ValueChanged += new System.EventHandler(this.hsbarMinPWM_ValueChanged);
+            this.hsbarMinPWM.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarMinPWM_HelpRequested);
             // 
             // hsbarProportionalGain
             // 
             this.hsbarProportionalGain.LargeChange = 1;
             this.hsbarProportionalGain.Location = new System.Drawing.Point(68, 89);
             this.hsbarProportionalGain.Maximum = 200;
-            this.hsbarProportionalGain.Minimum = 1;
             this.hsbarProportionalGain.Name = "hsbarProportionalGain";
             this.hsbarProportionalGain.Size = new System.Drawing.Size(202, 30);
             this.hsbarProportionalGain.TabIndex = 254;
             this.hsbarProportionalGain.Value = 4;
             this.hsbarProportionalGain.ValueChanged += new System.EventHandler(this.hsbarProportionalGain_ValueChanged);
+            this.hsbarProportionalGain.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarProportionalGain_HelpRequested);
             // 
             // lblProportionalGain
             // 
@@ -809,6 +815,7 @@
             this.hsbarHighSteerPWM.TabIndex = 274;
             this.hsbarHighSteerPWM.Value = 50;
             this.hsbarHighSteerPWM.ValueChanged += new System.EventHandler(this.hsbarHighSteerPWM_ValueChanged);
+            this.hsbarHighSteerPWM.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarHighSteerPWM_HelpRequested);
             // 
             // tabStan
             // 
@@ -851,6 +858,7 @@
             this.hsbarIntegral.TabIndex = 351;
             this.hsbarIntegral.Value = 5;
             this.hsbarIntegral.ValueChanged += new System.EventHandler(this.hsbarIntegral_ValueChanged);
+            this.hsbarIntegral.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarIntegral_HelpRequested);
             // 
             // label27
             // 
@@ -930,6 +938,7 @@
             this.hsbarStanleyGain.TabIndex = 297;
             this.hsbarStanleyGain.Value = 10;
             this.hsbarStanleyGain.ValueChanged += new System.EventHandler(this.hsbarStanleyGain_ValueChanged);
+            this.hsbarStanleyGain.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarStanleyGain_HelpRequested);
             // 
             // hsbarHeadingErrorGain
             // 
@@ -942,6 +951,7 @@
             this.hsbarHeadingErrorGain.TabIndex = 294;
             this.hsbarHeadingErrorGain.Value = 10;
             this.hsbarHeadingErrorGain.ValueChanged += new System.EventHandler(this.hsbarHeadingErrorGain_ValueChanged);
+            this.hsbarHeadingErrorGain.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarHeadingErrorGain_HelpRequested);
             // 
             // tabInt
             // 
@@ -1003,6 +1013,7 @@
             this.hsbarHoldLookAhead.TabIndex = 354;
             this.hsbarHoldLookAhead.Value = 25;
             this.hsbarHoldLookAhead.ValueChanged += new System.EventHandler(this.hsbarHoldLookAhead_ValueChanged);
+            this.hsbarHoldLookAhead.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarHoldLookAhead_HelpRequested);
             // 
             // lblPureIntegral
             // 
@@ -1024,6 +1035,7 @@
             this.hsbarIntegralPurePursuit.TabIndex = 349;
             this.hsbarIntegralPurePursuit.Value = 5;
             this.hsbarIntegralPurePursuit.ValueChanged += new System.EventHandler(this.hsbarIntegralPurePursuit_ValueChanged);
+            this.hsbarIntegralPurePursuit.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarIntegralPurePursuit_HelpRequested);
             // 
             // label26
             // 
@@ -1103,6 +1115,7 @@
             this.hsbarLookAheadMult.TabIndex = 298;
             this.hsbarLookAheadMult.Value = 6;
             this.hsbarLookAheadMult.ValueChanged += new System.EventHandler(this.hsbarLookAheadMult_ValueChanged);
+            this.hsbarLookAheadMult.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarLookAheadMult_HelpRequested);
             // 
             // lblLookAhead
             // 
@@ -1137,6 +1150,7 @@
             this.hsbarLookAhead.TabIndex = 289;
             this.hsbarLookAhead.Value = 25;
             this.hsbarLookAhead.ValueChanged += new System.EventHandler(this.hsbarLookAhead_ValueChanged);
+            this.hsbarLookAhead.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarLookAhead_HelpRequested);
             // 
             // imageList1
             // 
@@ -1168,6 +1182,7 @@
             this.hsbarSideHillComp.TabIndex = 352;
             this.hsbarSideHillComp.Value = 5;
             this.hsbarSideHillComp.ValueChanged += new System.EventHandler(this.hsbarSideHillComp_ValueChanged);
+            this.hsbarSideHillComp.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.hsbarSideHillComp_HelpRequested);
             // 
             // label22
             // 
@@ -1276,6 +1291,7 @@
             this.cboxMotorDrive.Size = new System.Drawing.Size(175, 37);
             this.cboxMotorDrive.TabIndex = 495;
             this.cboxMotorDrive.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxMotorDrive.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxMotorDrive_HelpRequested);
             // 
             // cboxSteerEnable
             // 
@@ -1294,6 +1310,7 @@
             this.cboxSteerEnable.Size = new System.Drawing.Size(175, 37);
             this.cboxSteerEnable.TabIndex = 498;
             this.cboxSteerEnable.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxSteerEnable.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxSteerEnable_HelpRequested);
             // 
             // label62
             // 
@@ -1324,6 +1341,7 @@
             this.cboxConv.Size = new System.Drawing.Size(175, 37);
             this.cboxConv.TabIndex = 500;
             this.cboxConv.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxConv.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxConv_HelpRequested);
             // 
             // label63
             // 
@@ -1357,7 +1375,7 @@
             this.label61.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.ForeColor = System.Drawing.Color.Black;
             this.label61.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label61.Location = new System.Drawing.Point(16, 210);
+            this.label61.Location = new System.Drawing.Point(38, 214);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(112, 32);
             this.label61.TabIndex = 494;
@@ -1369,7 +1387,7 @@
             this.nudMaxCounts.BackColor = System.Drawing.Color.AliceBlue;
             this.nudMaxCounts.Font = new System.Drawing.Font("Tahoma", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nudMaxCounts.InterceptArrowKeys = false;
-            this.nudMaxCounts.Location = new System.Drawing.Point(21, 245);
+            this.nudMaxCounts.Location = new System.Drawing.Point(43, 249);
             this.nudMaxCounts.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1386,6 +1404,7 @@
             0,
             0});
             this.nudMaxCounts.Click += new System.EventHandler(this.nudMaxCounts_Click);
+            this.nudMaxCounts.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.nudMaxCounts_HelpRequested);
             // 
             // label55
             // 
@@ -1477,6 +1496,7 @@
             this.btnStartSA.TabIndex = 323;
             this.btnStartSA.UseVisualStyleBackColor = true;
             this.btnStartSA.Click += new System.EventHandler(this.btnStartSA_Click);
+            this.btnStartSA.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnStartSA_HelpRequested);
             // 
             // btnFreeDriveZero
             // 
@@ -1492,6 +1512,7 @@
             this.btnFreeDriveZero.TabIndex = 313;
             this.btnFreeDriveZero.UseVisualStyleBackColor = true;
             this.btnFreeDriveZero.Click += new System.EventHandler(this.btnFreeDriveZero_Click);
+            this.btnFreeDriveZero.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnFreeDriveZero_HelpRequested);
             // 
             // btnSteerAngleUp
             // 
@@ -1507,6 +1528,7 @@
             this.btnSteerAngleUp.Size = new System.Drawing.Size(73, 56);
             this.btnSteerAngleUp.TabIndex = 315;
             this.btnSteerAngleUp.UseVisualStyleBackColor = true;
+            this.btnSteerAngleUp.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnSteerAngleUp_HelpRequested);
             this.btnSteerAngleUp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSteerAngleUp_MouseDown);
             // 
             // btnFreeDrive
@@ -1524,6 +1546,7 @@
             this.btnFreeDrive.TabIndex = 228;
             this.btnFreeDrive.UseVisualStyleBackColor = false;
             this.btnFreeDrive.Click += new System.EventHandler(this.btnFreeDrive_Click);
+            this.btnFreeDrive.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnFreeDrive_HelpRequested);
             // 
             // btnSteerAngleDown
             // 
@@ -1539,6 +1562,7 @@
             this.btnSteerAngleDown.Size = new System.Drawing.Size(73, 56);
             this.btnSteerAngleDown.TabIndex = 314;
             this.btnSteerAngleDown.UseVisualStyleBackColor = true;
+            this.btnSteerAngleDown.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.btnSteerAngleDown_HelpRequested);
             this.btnSteerAngleDown.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSteerAngleDown_MouseDown);
             // 
             // hsbarSensor
@@ -1662,6 +1686,7 @@
             this.cboxCurrentSensor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cboxCurrentSensor.UseVisualStyleBackColor = false;
             this.cboxCurrentSensor.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxCurrentSensor.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxCurrentSensor_HelpRequested);
             // 
             // cboxPressureSensor
             // 
@@ -1681,6 +1706,7 @@
             this.cboxPressureSensor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cboxPressureSensor.UseVisualStyleBackColor = false;
             this.cboxPressureSensor.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxPressureSensor.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxPressureSensor_HelpRequested);
             // 
             // pboxSendSteer
             // 
@@ -1692,6 +1718,7 @@
             this.pboxSendSteer.TabIndex = 509;
             this.pboxSendSteer.TabStop = false;
             this.pboxSendSteer.Visible = false;
+            this.pboxSendSteer.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.pboxSendSteer_HelpRequested);
             // 
             // cboxDanfoss
             // 
@@ -1711,6 +1738,7 @@
             this.cboxDanfoss.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cboxDanfoss.UseVisualStyleBackColor = false;
             this.cboxDanfoss.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxDanfoss.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxDanfoss_HelpRequested);
             // 
             // chkSteerInvertRelays
             // 
@@ -1730,6 +1758,7 @@
             this.chkSteerInvertRelays.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkSteerInvertRelays.UseVisualStyleBackColor = false;
             this.chkSteerInvertRelays.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.chkSteerInvertRelays.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.chkSteerInvertRelays_HelpRequested);
             // 
             // chkInvertSteer
             // 
@@ -1749,6 +1778,7 @@
             this.chkInvertSteer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkInvertSteer.UseVisualStyleBackColor = false;
             this.chkInvertSteer.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.chkInvertSteer.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.chkInvertSteer_HelpRequested);
             // 
             // cboxEncoder
             // 
@@ -1768,6 +1798,7 @@
             this.cboxEncoder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cboxEncoder.UseVisualStyleBackColor = false;
             this.cboxEncoder.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxEncoder.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxEncoder_HelpRequested);
             // 
             // chkInvertWAS
             // 
@@ -1789,6 +1820,7 @@
             this.chkInvertWAS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.chkInvertWAS.UseVisualStyleBackColor = false;
             this.chkInvertWAS.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.chkInvertWAS.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.chkInvertWAS_HelpRequested);
             // 
             // btnSendSteerConfigPGN
             // 
@@ -1803,6 +1835,7 @@
             this.btnSendSteerConfigPGN.TabIndex = 501;
             this.btnSendSteerConfigPGN.UseVisualStyleBackColor = false;
             this.btnSendSteerConfigPGN.Click += new System.EventHandler(this.btnSendSteerConfigPGN_Click);
+            this.btnSendSteerConfigPGN.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.pboxSendSteer_HelpRequested);
             // 
             // cboxXY
             // 
@@ -1820,6 +1853,7 @@
             this.cboxXY.Size = new System.Drawing.Size(175, 37);
             this.cboxXY.TabIndex = 525;
             this.cboxXY.Click += new System.EventHandler(this.EnableAlert_Click);
+            this.cboxXY.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.cboxXY_HelpRequested);
             // 
             // label33
             // 
@@ -2007,12 +2041,15 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HelpButton = true;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(960, 720);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(388, 480);
             this.Name = "FormSteer";
             this.Padding = new System.Windows.Forms.Padding(2);
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Auto Steer Configuration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSteer_FormClosing);

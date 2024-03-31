@@ -18,7 +18,7 @@ namespace AgOpenGPS
 
         public bool isBoundAlarming, isRTKAlarming;
 
-        public bool isSteerSoundOn, isTurnSoundOn, isHydLiftSoundOn, isSectionsSoundOn;
+        public bool isSteerSoundOn, isTurnSoundOn, isHydLiftSoundOn;
 
         public bool isHydLiftChange;
 
@@ -27,7 +27,6 @@ namespace AgOpenGPS
             isSteerSoundOn = Properties.Settings.Default.setSound_isAutoSteerOn;
             isHydLiftSoundOn = Properties.Settings.Default.setSound_isHydLiftOn;
             isTurnSoundOn = Properties.Settings.Default.setSound_isUturnOn;
-            isSectionsSoundOn = Properties.Settings.Default.setSound_isSectionsOn;
         }
     }
 }

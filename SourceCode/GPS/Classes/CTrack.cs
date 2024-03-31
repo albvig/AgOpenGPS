@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace AgOpenGPS
 {
-    public enum TrackMode { None = 0, AB = 2, Curve = 4, bndTrackOuter = 8, bndTrackInner = 16, bndCurve = 32, waterPivot = 64};//, Heading, Circle, Spiral
+    public enum TrackMode { None = 0, AB = 2, Curve = 4, bndTrackOuter = 8, bndTrackInner = 16, bndCurve = 32};//, Heading, Circle, Spiral
 
     public class CTrack
     {
@@ -59,15 +59,11 @@ namespace AgOpenGPS
             bool[] isAlignedArr = new bool[gArr.Count];
             for (int i = 0; i < gArr.Count; i++)
             {
-                if (gArr[i].mode == (int)TrackMode.Curve) isAlignedArr[i] = true;
+                double diff = Math.PI - Math.Abs(Math.Abs(pivot.heading - gArr[i].heading) - Math.PI);
+                if (diff < 0.5 || diff > 2.64)
+                    isAlignedArr[i] = true;
                 else
-                {
-                    double diff = Math.PI - Math.Abs(Math.Abs(pivot.heading - gArr[i].heading) - Math.PI);
-                    if (diff < 0.6 || diff > 2.54)
-                        isAlignedArr[i] = true;
-                    else
-                        isAlignedArr[i] = false;
-                }
+                    isAlignedArr[i] = false;
             }
 
             double minDistA = double.MaxValue;
