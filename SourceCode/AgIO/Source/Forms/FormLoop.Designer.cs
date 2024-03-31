@@ -1172,6 +1172,7 @@ namespace AgIO
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblWatch;
         private System.Windows.Forms.Button btnStartStopNtrip;
+        private System.Windows.Forms.Button btnGPS_Out;
         private System.Windows.Forms.Label lblNTRIPBytes;
         private System.Windows.Forms.Label lblMod2Comm;
         private System.Windows.Forms.Label lblMod1Comm;
