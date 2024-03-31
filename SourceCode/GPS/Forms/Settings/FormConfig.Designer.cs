@@ -555,6 +555,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label79 = new System.Windows.Forms.Label();
             this.panelLeftSideMenu.SuspendLayout();
             this.panelArduinoSubMenu.SuspendLayout();
             this.panelDataSourcesSubMenu.SuspendLayout();
@@ -681,6 +682,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudTramWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.tabBtns.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudlessNumericUpDown1)).BeginInit();
             this.tabDisplay.SuspendLayout();
             this.unitsGroupBox.SuspendLayout();
             this.panelBottom.SuspendLayout();
@@ -9862,6 +9864,18 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label79
+            // 
+            this.label79.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label79.AutoSize = true;
+            this.label79.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label79.ForeColor = System.Drawing.Color.Black;
+            this.label79.Location = new System.Drawing.Point(402, 163);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(168, 16);
+            this.label79.TabIndex = 523;
+            this.label79.Text = "Manual Section Buttons Size";
+            // 
             // FormConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -10032,6 +10046,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.tabBtns.ResumeLayout(false);
             this.tabBtns.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudlessNumericUpDown1)).EndInit();
             this.tabDisplay.ResumeLayout(false);
             this.tabDisplay.PerformLayout();
             this.unitsGroupBox.ResumeLayout(false);

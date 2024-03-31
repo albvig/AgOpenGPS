@@ -111,7 +111,7 @@ namespace AgOpenGPS
 
         public bool isMaxAngularVelocity = false;
 
-        public int minSteerSpeedTimer = 0;
+        public int minSteerSpeedTimer = 0, speedTimer = 0;
 
         public void UpdateFixPosition()
         {
@@ -880,6 +880,17 @@ namespace AgOpenGPS
                     else
                     {
                         minSteerSpeedTimer = 0;
+                    }
+                }
+                
+                if (avgSpeed > 20 && steerModuleConnectedCounter > 30)
+                {
+                    speedTimer++;
+                    if (speedTimer > 30)
+                    {
+                        TimedMessageBox(3000, "Disable Steering", "Above maximum working speed: 20 Kmh");
+                        sounds.sndUTurnTooClose.Play();
+                        speedTimer = 0;
                     }
                 }
 

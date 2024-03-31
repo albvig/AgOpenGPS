@@ -300,6 +300,7 @@ namespace AgOpenGPS
             cboxSectionsSound.Checked = Properties.Settings.Default.setSound_isSectionsOn;
 
             cboxAutoStartAgIO.Checked = Properties.Settings.Default.setDisplay_isAutoStartAgIO;
+            nudlessNumericUpDown1.Value = Properties.Settings.Default.set_sectionButtonsHeight;
         }
 
         private void tabBtns_Leave(object sender, EventArgs e)
