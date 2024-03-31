@@ -442,6 +442,7 @@ namespace AgOpenGPS
             //OGL control
             isUTurnOn = Properties.Settings.Default.setFeatures.isUTurnOn;
             isLateralOn = Properties.Settings.Default.setFeatures.isLateralOn;
+            sectionButtonsHeight = Properties.Settings.Default.set_sectionButtonsHeight;
             isNudgeOn = Properties.Settings.Default.setFeatures.isABLineOn;
 
             if (isMetric)
@@ -675,8 +676,9 @@ namespace AgOpenGPS
 
             isStanleyUsed = Properties.Settings.Default.setVehicle_isStanleyUsed;
 
+            //keep size of window even after vehichle change
             //main window first
-            if (Settings.Default.setWindow_Maximized)
+            /*if (Settings.Default.setWindow_Maximized)
             {
                 WindowState = FormWindowState.Normal;
                 Location = Settings.Default.setWindow_Location;
@@ -692,12 +694,13 @@ namespace AgOpenGPS
             {
                 Location = Settings.Default.setWindow_Location;
                 Size = Settings.Default.setWindow_Size;
-            }
+            }*/
 
+            //keep day/night mode when loading new vehichle
             //night mode
-            isDay = Properties.Settings.Default.setDisplay_isDayMode;
+            /*isDay = Properties.Settings.Default.setDisplay_isDayMode;
             isDay = !isDay;
-            SwapDayNightMode();
+            SwapDayNightMode();*/
 
             //load uturn properties
             yt = new CYouTurn(this);

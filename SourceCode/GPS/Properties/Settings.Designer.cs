@@ -2867,6 +2867,19 @@ namespace AgOpenGPS.Properties {
                 this["setWindow_RateMapZoom"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public int set_sectionButtonsHeight
+        {
+            get
+            {
+                return ((int)(this["set_sectionButtonsHeight"]));
+            }
+            set
+            {
+                this["set_sectionButtonsHeight"] = value;
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
