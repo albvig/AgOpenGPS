@@ -59,8 +59,7 @@ namespace AgOpenGPS
             panelABLine.Top = 3; panelABLine.Left = 3;
             panelAPlus.Top = 3; panelAPlus.Left = 3;
             panelLatLonPlus.Top = 3; panelLatLonPlus.Left = 3;
-            panelLatLonLatLon.Top = 3; panelLatLonLatLon.Left = 3;
-            panelPivot.Top = 3; panelPivot.Left = 3;
+            panel1.Top = 3; panel1.Left = 3;
 
             panelEditName.Visible = false;
             panelMain.Visible = true;
@@ -71,8 +70,7 @@ namespace AgOpenGPS
             panelABLine.Visible = false;
             panelAPlus.Visible = false;
             panelLatLonPlus.Visible = false;
-            panelLatLonLatLon.Visible = false;
-            panelPivot.Visible = false;
+            panel1.Visible = false;
 
             this.Size = new System.Drawing.Size(650, 480);
 
@@ -224,6 +222,7 @@ namespace AgOpenGPS
                     Size = new Size(40, 25),
                     Name = i.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
+                    //ForeColor = System.Drawing.SystemColors.ButtonFace
                 };
                 a.Click += A_Click;
 
@@ -239,16 +238,22 @@ namespace AgOpenGPS
                     Name = i.ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
                     FlatStyle = FlatStyle.Flat,
+                    //BackColor = System.Drawing.SystemColors.ButtonFace
             };
 
                 if (mf.trk.gArr[i].mode == (int)TrackMode.AB)
                     b.Image = Properties.Resources.TrackLine;
-                else if (mf.trk.gArr[i].mode == (int)TrackMode.waterPivot)
-                    b.Image = Properties.Resources.TrackPivot;
                 else
                     b.Image = Properties.Resources.TrackCurve;
 
-                b.FlatAppearance.BorderSize = 0;
+               b.FlatAppearance.BorderSize = 0;
+
+                //a.Font = backupfont;
+                //a.FlatStyle = FlatStyle.Flat;
+                //a.FlatAppearance.BorderColor = Color.Cyan;
+                //a.BackColor = Color.Transparent;
+                //a.FlatAppearance.MouseOverBackColor = BackColor;
+                //a.FlatAppearance.MouseDownBackColor = BackColor;
 
                 TextBox t = new TextBox
                 {
@@ -563,28 +568,14 @@ namespace AgOpenGPS
             panelChoose.Visible = false;
             panelLatLonPlus.Visible = true;
             this.Size = new System.Drawing.Size(370, 460);
-
-            nudLatitudePlus.Value = (decimal)mf.pn.latitude;
-            nudLongitudePlus.Value = (decimal)mf.pn.longitude;
         }
 
         private void btnzLatLon_Click(object sender, EventArgs e)
         {
             panelChoose.Visible = false;
-            panelLatLonLatLon.Visible = true;
+            panel1.Visible = true;
             this.Size = new System.Drawing.Size(370, 460);
         }
-        private void btnLatLonPivot_Click(object sender, EventArgs e)
-        {
-
-            panelChoose.Visible = false;
-            panelPivot.Visible = true;
-            this.Size = new System.Drawing.Size(370,360);
-
-            nudLatitudePivot.Value = (decimal)mf.pn.latitude;
-            nudLongitudePivot.Value = (decimal)mf.pn.longitude;
-        }
-
         #endregion
 
         #region Curve
@@ -1083,85 +1074,6 @@ namespace AgOpenGPS
 
         #endregion
 
-        #region LatLon LatLon
-
-        private void nudLatitudeA_Click(object sender, EventArgs e)
-        {
-            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
-        }
-
-        private void nudLongitudeA_Click(object sender, EventArgs e)
-        {
-            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
-        }
-
-        private void nudLatitudeB_Click(object sender, EventArgs e)
-        {
-            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
-        }
-
-        private void nudLongitudeB_Click(object sender, EventArgs e)
-        {
-            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
-        }
-
-        private void btnEnter_LatLonLatLon_Click(object sender, EventArgs e)
-        {
-            CalcHeadingAB();
-
-            mf.ABLine.isMakingABLine = false;
-            mf.trk.gArr.Add(new CTrk());
-
-            idx = mf.trk.gArr.Count - 1;
-
-            mf.trk.gArr[idx].ptA = new vec2(mf.ABLine.desPtA);
-            mf.trk.gArr[idx].ptB = new vec2(mf.ABLine.desPtB);
-
-            mf.trk.gArr[idx].mode = (int)TrackMode.AB;
-
-            mf.trk.gArr[idx].heading = mf.ABLine.desHeading;
-
-            mf.ABLine.desName = "AB " +
-                (Math.Round(glm.toDegrees(mf.ABLine.desHeading), 1)).ToString(CultureInfo.InvariantCulture) + "\u00B0 ";
-            textBox1.Text = mf.ABLine.desName;
-
-            panelLatLonLatLon.Visible = false;
-            panelName.Visible = true;
-
-            this.Size = new System.Drawing.Size(270, 360);
-        }
-
-        public void CalcHeadingAB()
-        {
-            mf.pn.ConvertWGS84ToLocal((double)nudLatitudeA.Value, (double)nudLongitudeA.Value, out double nort, out double east);
-
-            mf.ABLine.desPtA.easting = east;
-            mf.ABLine.desPtA.northing = nort;
-
-            mf.pn.ConvertWGS84ToLocal((double)nudLatitudeB.Value, (double)nudLongitudeB.Value, out nort, out east);
-            mf.ABLine.desPtB.easting = east;
-            mf.ABLine.desPtB.northing = nort;
-
-            // heading based on AB points
-            mf.ABLine.desHeading = Math.Atan2(mf.ABLine.desPtB.easting - mf.ABLine.desPtA.easting,
-                mf.ABLine.desPtB.northing - mf.ABLine.desPtA.northing);
-            if (mf.ABLine.desHeading < 0) mf.ABLine.desHeading += glm.twoPI;
-        }
-
-        private void btnFillLatLonLatLonA_Click(object sender, EventArgs e)
-        {
-            nudLatitudeA.Value = (decimal)mf.pn.latitude;
-            nudLongitudeA.Value = (decimal)mf.pn.longitude;
-        }
-
-        private void btnFillLatLonLatLonB_Click(object sender, EventArgs e)
-        {
-            nudLatitudeB.Value = (decimal)mf.pn.latitude;
-            nudLongitudeB.Value = (decimal)mf.pn.longitude;
-        }
-
-        #endregion
-
         #region LatLon +
 
         private void nudLatitudePlus_Click(object sender, EventArgs e)
@@ -1209,12 +1121,6 @@ namespace AgOpenGPS
             this.Size = new System.Drawing.Size(270, 360);
         }
 
-        private void btnFillLatLonPlus_Click(object sender, EventArgs e)
-        {
-            nudLatitudePlus.Value = (decimal)mf.pn.latitude;
-            nudLongitudePlus.Value = (decimal)mf.pn.longitude;
-        }
-
         public void CalcHeadingAPlus()
         {
             mf.pn.ConvertWGS84ToLocal((double)nudLatitudePlus.Value, (double)nudLongitudePlus.Value, out double nort, out double east);
@@ -1226,46 +1132,79 @@ namespace AgOpenGPS
 
         #endregion
 
-        #region Lat Lon Pivot
+        #region LatLon LatLon
 
-        private void nudLatitudePivot_Click(object sender, EventArgs e)
+        private void nudLatitudeA_Click(object sender, EventArgs e)
         {
             mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
         }
 
-        private void nudLongitudePivot_Click(object sender, EventArgs e)
+        private void nudLongitudeA_Click(object sender, EventArgs e)
         {
             mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
         }
 
-        private void btnEnter_Pivot_Click(object sender, EventArgs e)
+        private void nudLatitudeB_Click(object sender, EventArgs e)
         {
-            mf.pn.ConvertWGS84ToLocal((double)nudLatitudePivot.Value, (double)nudLongitudePivot.Value, out double nort, out double east);
+            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
+        }
 
+        private void nudLongitudeB_Click(object sender, EventArgs e)
+        {
+            mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
+        }
+
+        private void btnEnter_LatLonLatLon_Click(object sender, EventArgs e)
+        {
+            CalcHeadingAB();
+
+            mf.ABLine.isMakingABLine = false;
             mf.trk.gArr.Add(new CTrk());
 
             idx = mf.trk.gArr.Count - 1;
 
-            mf.trk.gArr[idx].ptA.easting = east;
-            mf.trk.gArr[idx].ptA.northing = nort;
-            mf.trk.gArr[idx].mode = (int)TrackMode.waterPivot;
+            mf.trk.gArr[idx].ptA = new vec2(mf.ABLine.desPtA);
+            mf.trk.gArr[idx].ptB = new vec2(mf.ABLine.desPtB);
 
-            mf.ABLine.desName = "Piv";
+            mf.trk.gArr[idx].mode = (int)TrackMode.AB;
+
+            mf.trk.gArr[idx].heading = mf.ABLine.desHeading;
+
+            mf.ABLine.desName = "AB " +
+                (Math.Round(glm.toDegrees(mf.ABLine.desHeading), 1)).ToString(CultureInfo.InvariantCulture) + "\u00B0 ";
             textBox1.Text = mf.ABLine.desName;
 
-            panelPivot.Visible = false;
+            panel1.Visible = false;
             panelName.Visible = true;
 
             this.Size = new System.Drawing.Size(270, 360);
         }
 
-        private void btnFillLAtLonPivot_Click(object sender, EventArgs e)
+        public void CalcHeadingAB()
         {
-            nudLatitudePivot.Value = (decimal)mf.pn.latitude;
-            nudLongitudePivot.Value = (decimal)mf.pn.longitude;
+            mf.pn.ConvertWGS84ToLocal((double)nudLatitudeA.Value, (double)nudLongitudeA.Value, out double nort, out double east);
+
+            mf.ABLine.desPtA.easting = east;
+            mf.ABLine.desPtA.northing = nort;
+
+            mf.pn.ConvertWGS84ToLocal((double)nudLatitudeB.Value, (double)nudLongitudeB.Value, out nort, out east);
+            mf.ABLine.desPtB.easting = east;
+            mf.ABLine.desPtB.northing = nort;
+
+            // heading based on AB points
+            mf.ABLine.desHeading = Math.Atan2(mf.ABLine.desPtB.easting - mf.ABLine.desPtA.easting,
+                mf.ABLine.desPtB.northing - mf.ABLine.desPtA.northing);
+            if (mf.ABLine.desHeading < 0) mf.ABLine.desHeading += glm.twoPI;
         }
 
         #endregion
+
+
+        private void btnAddTime_Click(object sender, EventArgs e)
+        {
+            textBox1.Text += DateTime.Now.ToString(" hh:mm:ss", CultureInfo.InvariantCulture);
+            mf.curve.desName = textBox1.Text;
+        }
 
         private void btnCancelCurve_Click(object sender, EventArgs e)
         {
@@ -1279,10 +1218,9 @@ namespace AgOpenGPS
             panelCurve.Visible = false;
             panelABLine.Visible = false;
             panelAPlus.Visible = false;
-            panelLatLonLatLon.Visible = false;
+            panel1.Visible = false;
             panelLatLonPlus.Visible = false;
             panelKML.Visible = false;
-            panelPivot.Visible = false;
 
             this.Size = new System.Drawing.Size(650, 480);
         }
@@ -1308,12 +1246,6 @@ namespace AgOpenGPS
 
             mf.curve.desList?.Clear();
             UpdateTable();
-        }
-
-        private void btnAddTime_Click(object sender, EventArgs e)
-        {
-            textBox1.Text += DateTime.Now.ToString(" hh:mm:ss", CultureInfo.InvariantCulture);
-            mf.curve.desName = textBox1.Text;
         }
 
         private void btnAddTimeEdit_Click(object sender, EventArgs e)
@@ -1381,5 +1313,107 @@ namespace AgOpenGPS
                 mf.curve.desList.Add(arr[i]);
             }
         }
+
+        #region Help
+
+        private void btnListDelete_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnListDelete, gStr.gsHelp);
+        }
+
+        private void btnCancelMain_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnCancel, gStr.gsHelp);
+        }
+
+        private void btnNewCurve_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnNewABLine, gStr.gsHelp);
+        }
+
+        private void btnListUse_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnListUse, gStr.gsHelp);
+        }
+
+        private void btnSwapAB_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ht_btnSwapAB, gStr.gsHelp);
+        }
+
+        private void btnEditName_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.hd_tboxNameLine, gStr.gsHelp);
+        }
+
+        private void btnDuplicate_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnDuplicate, gStr.gsHelp);
+        }
+
+        private void btnAddTime_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnAddTime, gStr.gsHelp);
+        }
+
+        private void btnAddTimeEdit_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnAddTime, gStr.gsHelp);
+        }
+
+        private void btnCancel_Name_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnCancelCreate, gStr.gsHelp);
+        }
+
+        private void btnCancelCurve_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnCancelCreate, gStr.gsHelp);
+        }
+
+        private void btnCancelEditName_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnCancelCreate, gStr.gsHelp);
+        }
+
+        private void btnAdd_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnEnterContinue, gStr.gsHelp);
+        }
+
+        private void btnSaveEditName_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_btnEnterContinue, gStr.gsHelp);
+        }
+
+        private void btnAPoint_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.hcur_btnAPoint, gStr.gsHelp);
+        }
+
+        private void btnBPoint_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.hcur_btnBPoint, gStr.gsHelp);
+        }
+
+        private void btnPausePlay_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.hcur_btnPausePlay, gStr.gsHelp);
+        }
+
+        private void textBox1_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_textBox1, gStr.gsHelp);
+        }
+
+        private void textBox2_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            MessageBox.Show(gStr.ha_textBox1, gStr.gsHelp);
+        }
+
+
+        #endregion Help
+
+
     }
 }
