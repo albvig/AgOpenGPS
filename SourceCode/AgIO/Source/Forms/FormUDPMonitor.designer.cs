@@ -52,7 +52,7 @@
             this.btnSerialCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSerialCancel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSerialCancel.Image = global::AgIO.Properties.Resources.OK64;
-            this.btnSerialCancel.Location = new System.Drawing.Point(386, 232);
+            this.btnSerialCancel.Location = new System.Drawing.Point(700, 232);
             this.btnSerialCancel.Name = "btnSerialCancel";
             this.btnSerialCancel.Size = new System.Drawing.Size(65, 54);
             this.btnSerialCancel.TabIndex = 71;
@@ -72,7 +72,7 @@
             this.textBoxRcv.Name = "textBoxRcv";
             this.textBoxRcv.ReadOnly = true;
             this.textBoxRcv.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxRcv.Size = new System.Drawing.Size(437, 194);
+            this.textBoxRcv.Size = new System.Drawing.Size(751, 194);
             this.textBoxRcv.TabIndex = 539;
             this.textBoxRcv.WordWrap = false;
             // 
@@ -84,7 +84,7 @@
             this.btnLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLog.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLog.Image = global::AgIO.Properties.Resources.LogNMEA;
-            this.btnLog.Location = new System.Drawing.Point(290, 232);
+            this.btnLog.Location = new System.Drawing.Point(604, 232);
             this.btnLog.Name = "btnLog";
             this.btnLog.Size = new System.Drawing.Size(78, 54);
             this.btnLog.TabIndex = 541;
@@ -104,7 +104,7 @@
             this.btnFileSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFileSave.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFileSave.Image = global::AgIO.Properties.Resources.VehFileSave;
-            this.btnFileSave.Location = new System.Drawing.Point(77, 233);
+            this.btnFileSave.Location = new System.Drawing.Point(391, 233);
             this.btnFileSave.Name = "btnFileSave";
             this.btnFileSave.Size = new System.Drawing.Size(53, 53);
             this.btnFileSave.TabIndex = 542;
@@ -119,7 +119,7 @@
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.Image = global::AgIO.Properties.Resources.Trash;
-            this.btnClear.Location = new System.Drawing.Point(6, 233);
+            this.btnClear.Location = new System.Drawing.Point(320, 233);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(53, 53);
             this.btnClear.TabIndex = 543;
@@ -134,7 +134,7 @@
             this.btnLogNMEA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogNMEA.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogNMEA.Image = global::AgIO.Properties.Resources.Nmea;
-            this.btnLogNMEA.Location = new System.Drawing.Point(219, 233);
+            this.btnLogNMEA.Location = new System.Drawing.Point(533, 233);
             this.btnLogNMEA.Name = "btnLogNMEA";
             this.btnLogNMEA.Size = new System.Drawing.Size(53, 53);
             this.btnLogNMEA.TabIndex = 544;
@@ -150,7 +150,7 @@
             this.lblSteerAngle.Location = new System.Drawing.Point(15, 8);
             this.lblSteerAngle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSteerAngle.Name = "lblSteerAngle";
-            this.lblSteerAngle.Size = new System.Drawing.Size(44, 18);
+            this.lblSteerAngle.Size = new System.Drawing.Size(57, 23);
             this.lblSteerAngle.TabIndex = 545;
             this.lblSteerAngle.Text = "Time";
             // 
@@ -163,7 +163,7 @@
             this.label1.Location = new System.Drawing.Point(100, 8);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 18);
+            this.label1.Size = new System.Drawing.Size(172, 23);
             this.label1.TabIndex = 546;
             this.label1.Text = "IP Address : Port";
             // 
@@ -176,7 +176,7 @@
             this.label2.Location = new System.Drawing.Point(310, 8);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 18);
+            this.label2.Size = new System.Drawing.Size(51, 23);
             this.label2.TabIndex = 547;
             this.label2.Text = "PGN";
             // 
@@ -188,7 +188,7 @@
             this.btnLogNTRIP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogNTRIP.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogNTRIP.Image = global::AgIO.Properties.Resources.NTRIP_Client;
-            this.btnLogNTRIP.Location = new System.Drawing.Point(148, 233);
+            this.btnLogNTRIP.Location = new System.Drawing.Point(462, 233);
             this.btnLogNTRIP.Name = "btnLogNTRIP";
             this.btnLogNTRIP.Size = new System.Drawing.Size(53, 53);
             this.btnLogNTRIP.TabIndex = 548;
@@ -204,17 +204,17 @@
             this.lblPGNGuide.Location = new System.Drawing.Point(381, 8);
             this.lblPGNGuide.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPGNGuide.Name = "lblPGNGuide";
-            this.lblPGNGuide.Size = new System.Drawing.Size(73, 18);
+            this.lblPGNGuide.Size = new System.Drawing.Size(95, 23);
             this.lblPGNGuide.TabIndex = 549;
             this.lblPGNGuide.Text = "Guide ->";
             this.lblPGNGuide.Click += new System.EventHandler(this.lblPGNGuide_Click);
             // 
             // FormUDPMonitor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(456, 291);
+            this.ClientSize = new System.Drawing.Size(770, 291);
             this.ControlBox = false;
             this.Controls.Add(this.lblPGNGuide);
             this.Controls.Add(this.btnLogNTRIP);

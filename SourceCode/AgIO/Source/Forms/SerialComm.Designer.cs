@@ -14,7 +14,7 @@ namespace AgIO
         private int totalHeaderByteCount = 5;
 
         public static string portNameGPS = "***";
-        public  static int baudRateGPS = 4800;
+        public  static int baudRateGPS = 115200;
 
         public  static string portNameGPS2 = "***";
         public  static int baudRateGPS2 = 4800;
