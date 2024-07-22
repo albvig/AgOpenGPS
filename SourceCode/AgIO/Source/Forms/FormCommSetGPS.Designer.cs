@@ -82,18 +82,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnRescan = new System.Windows.Forms.Button();
             this.btnSerialOK = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblIMU = new System.Windows.Forms.Label();
-            this.lblSteer = new System.Windows.Forms.Label();
-            this.lblMachine = new System.Windows.Forms.Label();
-            this.lblGPS = new System.Windows.Forms.Label();
-            this.lblFromGPS = new System.Windows.Forms.Label();
-            this.lblFromMU = new System.Windows.Forms.Label();
-            this.lblFromSteerModule = new System.Windows.Forms.Label();
-            this.lblFromMachineModule = new System.Windows.Forms.Label();
+            this.comList = new System.Windows.Forms.ListView();
+            this.Com = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -791,153 +782,29 @@
             this.btnSerialOK.UseVisualStyleBackColor = false;
             this.btnSerialOK.Click += new System.EventHandler(this.btnSerialOK_Click);
             // 
-            // label1
+            // comList
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(671, 327);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 23);
-            this.label1.TabIndex = 73;
-            this.label1.Text = "GPS:";
+            this.comList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Com,
+            this.columnHeader2});
+            this.comList.Font = new System.Drawing.Font("Tahoma", 10.5F);
+            this.comList.HideSelection = false;
+            this.comList.Location = new System.Drawing.Point(604, 321);
+            this.comList.Name = "comList";
+            this.comList.Size = new System.Drawing.Size(275, 255);
+            this.comList.TabIndex = 73;
+            this.comList.UseCompatibleStateImageBehavior = false;
+            this.comList.View = System.Windows.Forms.View.Details;
             // 
-            // label4
+            // Com
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label4.Location = new System.Drawing.Point(630, 456);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 23);
-            this.label4.TabIndex = 76;
-            this.label4.Text = "Machine:";
+            this.Com.Text = "Com-Port";
+            this.Com.Width = 73;
             // 
-            // label5
+            // columnHeader2
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(659, 414);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 23);
-            this.label5.TabIndex = 77;
-            this.label5.Text = "Steer:";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(669, 371);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 23);
-            this.label6.TabIndex = 78;
-            this.label6.Text = "IMU:";
-            // 
-            // lblIMU
-            // 
-            this.lblIMU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblIMU.AutoSize = true;
-            this.lblIMU.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIMU.Location = new System.Drawing.Point(725, 371);
-            this.lblIMU.Name = "lblIMU";
-            this.lblIMU.Size = new System.Drawing.Size(50, 23);
-            this.lblIMU.TabIndex = 83;
-            this.lblIMU.Text = "IMU";
-            // 
-            // lblSteer
-            // 
-            this.lblSteer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSteer.AutoSize = true;
-            this.lblSteer.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSteer.Location = new System.Drawing.Point(725, 414);
-            this.lblSteer.Name = "lblSteer";
-            this.lblSteer.Size = new System.Drawing.Size(60, 23);
-            this.lblSteer.TabIndex = 82;
-            this.lblSteer.Text = "Steer";
-            // 
-            // lblMachine
-            // 
-            this.lblMachine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMachine.AutoSize = true;
-            this.lblMachine.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMachine.Location = new System.Drawing.Point(725, 456);
-            this.lblMachine.Name = "lblMachine";
-            this.lblMachine.Size = new System.Drawing.Size(60, 23);
-            this.lblMachine.TabIndex = 81;
-            this.lblMachine.Text = "Mach";
-            // 
-            // lblGPS
-            // 
-            this.lblGPS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblGPS.AutoSize = true;
-            this.lblGPS.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGPS.Location = new System.Drawing.Point(725, 327);
-            this.lblGPS.Name = "lblGPS";
-            this.lblGPS.Size = new System.Drawing.Size(48, 23);
-            this.lblGPS.TabIndex = 79;
-            this.lblGPS.Text = "GPS";
-            // 
-            // lblFromGPS
-            // 
-            this.lblFromGPS.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFromGPS.BackColor = System.Drawing.Color.Transparent;
-            this.lblFromGPS.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromGPS.ForeColor = System.Drawing.Color.Black;
-            this.lblFromGPS.Location = new System.Drawing.Point(804, 325);
-            this.lblFromGPS.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblFromGPS.Name = "lblFromGPS";
-            this.lblFromGPS.Size = new System.Drawing.Size(64, 27);
-            this.lblFromGPS.TabIndex = 172;
-            this.lblFromGPS.Text = "---";
-            this.lblFromGPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblFromMU
-            // 
-            this.lblFromMU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFromMU.BackColor = System.Drawing.Color.Transparent;
-            this.lblFromMU.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromMU.ForeColor = System.Drawing.Color.Black;
-            this.lblFromMU.Location = new System.Drawing.Point(804, 368);
-            this.lblFromMU.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblFromMU.Name = "lblFromMU";
-            this.lblFromMU.Size = new System.Drawing.Size(64, 27);
-            this.lblFromMU.TabIndex = 175;
-            this.lblFromMU.Text = "---";
-            this.lblFromMU.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblFromSteerModule
-            // 
-            this.lblFromSteerModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFromSteerModule.BackColor = System.Drawing.Color.Transparent;
-            this.lblFromSteerModule.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromSteerModule.ForeColor = System.Drawing.Color.Black;
-            this.lblFromSteerModule.Location = new System.Drawing.Point(804, 412);
-            this.lblFromSteerModule.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblFromSteerModule.Name = "lblFromSteerModule";
-            this.lblFromSteerModule.Size = new System.Drawing.Size(64, 27);
-            this.lblFromSteerModule.TabIndex = 173;
-            this.lblFromSteerModule.Text = "---";
-            this.lblFromSteerModule.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblFromMachineModule
-            // 
-            this.lblFromMachineModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFromMachineModule.BackColor = System.Drawing.Color.Transparent;
-            this.lblFromMachineModule.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFromMachineModule.ForeColor = System.Drawing.Color.Black;
-            this.lblFromMachineModule.Location = new System.Drawing.Point(804, 454);
-            this.lblFromMachineModule.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblFromMachineModule.Name = "lblFromMachineModule";
-            this.lblFromMachineModule.Size = new System.Drawing.Size(64, 27);
-            this.lblFromMachineModule.TabIndex = 174;
-            this.lblFromMachineModule.Text = "---";
-            this.lblFromMachineModule.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.columnHeader2.Text = "Port-Name";
+            this.columnHeader2.Width = 190;
             // 
             // FormCommSetGPS
             // 
@@ -945,18 +812,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(929, 696);
             this.ControlBox = false;
-            this.Controls.Add(this.lblFromGPS);
-            this.Controls.Add(this.lblFromMU);
-            this.Controls.Add(this.lblFromSteerModule);
-            this.Controls.Add(this.lblFromMachineModule);
-            this.Controls.Add(this.lblIMU);
-            this.Controls.Add(this.lblSteer);
-            this.Controls.Add(this.lblMachine);
-            this.Controls.Add(this.lblGPS);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comList);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -989,7 +845,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1038,19 +893,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lblIMU;
-        private System.Windows.Forms.Label lblSteer;
-        private System.Windows.Forms.Label lblMachine;
-        private System.Windows.Forms.Label lblGPS;
-        private System.Windows.Forms.Label lblFromGPS;
-        private System.Windows.Forms.Label lblFromMU;
-        private System.Windows.Forms.Label lblFromSteerModule;
-        private System.Windows.Forms.Label lblFromMachineModule;
         private System.Windows.Forms.ComboBox cboxRtcmPort;
         private System.Windows.Forms.ComboBox cboxRtcmBaud;
         private System.Windows.Forms.Label labelRtcmPort;
@@ -1059,5 +902,8 @@
         private System.Windows.Forms.Button btnCloseRTCM;
         private System.Windows.Forms.Button btnOpenRTCM;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView comList;
+        private System.Windows.Forms.ColumnHeader Com;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }

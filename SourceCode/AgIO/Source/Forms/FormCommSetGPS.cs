@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Management;
+using System.Text.RegularExpressions;
+using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using System.Net;
 
 namespace AgIO
 {
@@ -325,12 +331,12 @@ namespace AgIO
             //GPS phrase
             textBoxRcv.Text = mf.recvGPSSentence;
             textBoxRcv2.Text = mf.recvGPS2Sentence;
-            lblSteer.Text = mf.spSteerModule.PortName;
-            lblGPS.Text = mf.spGPS.PortName;
-            lblIMU.Text = mf.spIMU.PortName;
-            lblMachine.Text = mf.spMachineModule.PortName;
+            //lblSteer.Text = mf.spSteerModule.PortName;
+            //lblGPS.Text = mf.spGPS.PortName;
+            //lblIMU.Text = mf.spIMU.PortName;
+            //lblMachine.Text = mf.spMachineModule.PortName;
 
-            lblFromGPS.Text = mf.traffic.cntrGPSIn == 0 ? "--" : (mf.traffic.cntrGPSIn).ToString();
+            //lblFromGPS.Text = mf.traffic.cntrGPSIn == 0 ? "--" : (mf.traffic.cntrGPSIn).ToString();
         }
 
         private void btnSerialOK_Click(object sender, EventArgs e)
@@ -340,6 +346,8 @@ namespace AgIO
 
         private void btnRescan_Click(object sender, EventArgs e)
         {
+            bool usingBluetooth = false;
+
             cboxPort.Items.Clear();
             cboxRtcmPort.Items.Clear();
             cboxPort2.Items.Clear();
@@ -347,6 +355,7 @@ namespace AgIO
             cboxSteerModulePort.Items.Clear();
             cboxMachineModulePort.Items.Clear();
             cboxModule3Port.Items.Clear();
+            comList.Items.Clear();
 
             foreach (string s in System.IO.Ports.SerialPort.GetPortNames())
             {
@@ -357,6 +366,99 @@ namespace AgIO
                 cboxSteerModulePort.Items.Add(s);
                 cboxMachineModulePort.Items.Add(s);
                 cboxModule3Port.Items.Add(s);
+            }
+            try
+            {
+
+                //Retrieve port descriptions using WMI
+                ManagementObjectSearcher searcher =
+                    new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity WHERE Caption LIKE '%(COM%)'");
+                foreach (ManagementObject queryObj in searcher.Get())
+                {
+                    string deviceName = queryObj["Name"].ToString();
+                    string deviceDescription = queryObj["Description"].ToString();
+                    string deviceID = queryObj["DeviceID"].ToString();
+
+                    // Check if the name contains "COM" as serial ports typically do
+                    if (deviceName.Contains("(COM"))
+                    {
+                        // Extract the port number from the device name
+                        string portNumber = deviceName.Substring(deviceName.IndexOf("(COM")).Replace("(", string.Empty).Replace(")", string.Empty);
+                        ListViewItem item1 = new ListViewItem(portNumber);
+                        item1.SubItems.Add(deviceDescription);
+
+                        // Check if the port is a bluetooth port
+                        if (String.Equals(deviceDescription, "Standard Serial over Bluetooth link", StringComparison.OrdinalIgnoreCase)) usingBluetooth = true;
+                        else comList.Items.Add(item1);
+                    }
+                }
+
+                if (usingBluetooth)
+                {
+
+                    Regex regexPortName = new Regex(@"(COM\d+)");
+                    ManagementObjectSearcher searchSerial = new ManagementObjectSearcher("SELECT * FROM Win32_PnPEntity");
+
+                    foreach (ManagementObject obj in searchSerial.Get())
+                    {
+                        string name = obj["Name"] as string;
+                        string classGuid = obj["ClassGuid"] as string;
+                        string deviceID = obj["DeviceID"] as string;
+
+                        if (classGuid != null && deviceID != null)
+                        {
+                            if (String.Equals(classGuid, "{4d36e978-e325-11ce-bfc1-08002be10318}", StringComparison.InvariantCulture))
+                            {
+                                string[] tokens = deviceID.Split('&');
+
+                                if (tokens.Length >= 4)
+                                {
+                                    string[] addressToken = tokens[4].Split('_');
+                                    string bluetoothAddress = addressToken[0];
+
+                                    Match m = regexPortName.Match(name);
+                                    string comPortNumber = "";
+                                    if (m.Success)
+                                    {
+                                        comPortNumber = m.Groups[1].ToString();
+                                    }
+
+                                    if (Convert.ToUInt64(bluetoothAddress, 16) > 0)
+                                    {
+                                        string bluetoothName = "";
+
+                                        string registryPath = @"SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Devices";
+                                        string devicePath = String.Format(@"{0}\{1}", registryPath, bluetoothAddress);
+
+                                        using (RegistryKey key = Registry.LocalMachine.OpenSubKey(devicePath))
+                                        {
+                                            if (key != null)
+                                            {
+                                                Object o = key.GetValue("Name");
+
+                                                byte[] raw = o as byte[];
+
+                                                if (raw != null)
+                                                {
+                                                    bluetoothName = Encoding.ASCII.GetString(raw);
+                                                }
+                                            }
+                                        }
+
+                                        ListViewItem item2 = new ListViewItem(comPortNumber);
+                                        item2.SubItems.Add(bluetoothName);
+                                        comList.Items.Add(item2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Couldn't perform WMI, error ");
+                Console.WriteLine(ex.Message);
             }
         }
 
