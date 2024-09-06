@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -272,7 +273,15 @@ namespace AgIO
                     }
                     else
                     {
-                        logUDPSentence.Append(DateTime.Now.ToString("ss.fff\t") + endPoint.ToString() + "\t" + " > " + byteData[3].ToString() + "\r\n");
+                        string s = "";
+                        for(int i = 0; i < byteData.Length; i++)
+                        {
+                            s += (byteData[i].ToString());
+                            if (i - 1 < byteData.Length) s += ",";
+
+                        }
+                        logUDPSentence.Append(DateTime.Now.ToString("ss.fff\t") + endPoint.ToString() + "\t" + " > " + s + "\r\n");
+                        
                     }
                 }
 
@@ -441,7 +450,14 @@ namespace AgIO
 
                     if (isUDPMonitorOn)
                     {
-                        logUDPSentence.Append(DateTime.Now.ToString("ss.fff\t") + endPointUDP.ToString() + "\t" + " < " + data[3].ToString() + "\r\n");
+                        string s = "";
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            s += (data[i].ToString());
+                            if (i - 1 < data.Length) s += ",";
+
+                        }
+                        logUDPSentence.Append(DateTime.Now.ToString("ss.fff\t") + endPointUDP.ToString() + "\t" + " < " + s + "\r\n");
                     }
 
                 } // end of pgns
