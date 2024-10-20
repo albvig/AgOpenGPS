@@ -327,9 +327,9 @@ namespace AgOpenGPS
 
             int oglCenter = isPanelBottomHidden ? oglCenter = oglMain.Width / 2 + 30 : statusStripLeft.Width + oglMain.Width / 2;
 
-            int top = 130;
+            int top = 230;
 
-            int buttonMaxWidth = 400, buttonHeight = 25;
+            int buttonMaxWidth = 400, buttonHeight = 75;
 
             if ((Height - oglMain.Height) < 80) //max size - buttons hid
             {
