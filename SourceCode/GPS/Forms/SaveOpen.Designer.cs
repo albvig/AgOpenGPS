@@ -1513,6 +1513,12 @@ namespace AgOpenGPS
                                     }
                                 }
 
+                                New.bndPolygon = new CPolygon(New.fenceLineEar.ToArray());
+
+                                New.triangleList?.Clear();
+
+                                New.triangleList = New.bndPolygon.Triangulate();
+
                                 bnd.bndList.Add(New);
                             }
                         }
