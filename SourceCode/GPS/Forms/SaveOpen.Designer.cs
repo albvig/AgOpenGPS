@@ -1514,6 +1514,17 @@ namespace AgOpenGPS
                                 }
 
                                 bnd.bndList.Add(New);
+
+
+                                //Calculate triangles of the boundary
+                                vec2[] tempVec2 = new vec2[bnd.bndList[0].fenceLineEar.Count];
+                                for (int i = 0; i < bnd.bndList[0].fenceLineEar.Count; i++)
+                                {
+                                    tempVec2[i] = new vec2(bnd.bndList[0].fenceLineEar[i].easting, bnd.bndList[0].fenceLineEar[i].northing);
+                                }
+                                polygon = new CPolygon(tempVec2);
+                                triangleList = polygon.Triangulate();
+
                             }
                         }
 

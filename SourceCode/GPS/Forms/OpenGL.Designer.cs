@@ -757,6 +757,19 @@ namespace AgOpenGPS
                 0);
 
             #region Draw to Back Buffer
+            //draw field
+            GL.Color3((byte)0, (byte)25, (byte)0);
+            GL.Begin(PrimitiveType.Triangles);
+            if (triangleList.Count > 0)
+            {
+                for (int i = 0; i < triangleList.Count; i++)
+                {
+                    GL.Vertex3(triangleList[i].polygonPts[0].easting, triangleList[i].polygonPts[0].northing, 0);
+                    GL.Vertex3(triangleList[i].polygonPts[1].easting, triangleList[i].polygonPts[1].northing, 0);
+                    GL.Vertex3(triangleList[i].polygonPts[2].easting, triangleList[i].polygonPts[2].northing, 0);
+                }
+            }
+            GL.End();
 
             //patch color
             GL.Color3((byte)0, (byte)127, (byte)0);
@@ -945,8 +958,9 @@ namespace AgOpenGPS
             GL.ReadPixels(tool.rpXPosition, 0, tool.rpWidth, (int)rpHeight, OpenTK.Graphics.OpenGL.PixelFormat.Green, PixelType.UnsignedByte, grnPixels);
 
             //Paint to context for troubleshooting
-            //oglBack.MakeCurrent();
-            //oglBack.SwapBuffers();
+            oglBack.BringToFront();
+            oglBack.MakeCurrent();
+            oglBack.SwapBuffers();
 
             //determine if headland is in read pixel buffer left middle and right. 
             int start = 0, end = 0, tagged = 0, totalPixel = 0;

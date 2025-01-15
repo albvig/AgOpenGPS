@@ -232,6 +232,15 @@ namespace AgOpenGPS
         /// </summary>
         public CWindowsSettingsBrightnessController displayBrightness;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public CPolygon polygon;
+        public List<Triangle> triangleList = new List<Triangle>();
+
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         #endregion // Class Props and instances
 
         //The method assigned to the PowerModeChanged event call
@@ -357,6 +366,10 @@ namespace AgOpenGPS
 
             //brightness object class
             displayBrightness = new CWindowsSettingsBrightnessController(Properties.Settings.Default.setDisplay_isBrightnessOn);
+
+            ////äääääääää
+            //polygons for section control
+            polygon = new CPolygon();
         }
 
         private void FormGPS_Load(object sender, EventArgs e)
