@@ -1515,9 +1515,9 @@ namespace AgOpenGPS
 
                                 New.bndPolygon = new CPolygon(New.fenceLineEar.ToArray());
 
-                                New.triangulatedList?.Clear();
+                                New.bndTriangleList?.Clear();
 
-                                New.triangulatedList = New.bndPolygon.Triangulate();
+                                New.bndTriangleList = New.bndPolygon.Triangulate();
 
                                 bnd.bndList.Add(New);
                             }

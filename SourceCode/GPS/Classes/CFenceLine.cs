@@ -130,8 +130,8 @@ namespace AgOpenGPS
 
             //Triangulate the boundary polygon
             bndPolygon = new CPolygon(fenceLineEar.ToArray());
-            triangulatedList?.Clear();
-            triangulatedList = bndPolygon.Triangulate();
+            bndTriangleList?.Clear();
+            bndTriangleList = bndPolygon.Triangulate();
         }
 
         public void ReverseWinding()
