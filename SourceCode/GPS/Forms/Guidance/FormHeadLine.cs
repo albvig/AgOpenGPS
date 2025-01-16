@@ -777,6 +777,9 @@ namespace AgOpenGPS
                     pt3 = new vec3(mf.hdl.desList[0]);
                     mf.hdl.desList.Add(pt3);
 
+                    mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.hdl.desList.ToArray());
+                    mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
+
                     //make sure point distance isn't too big 
                     mf.curve.MakePointMinimumSpacing(ref mf.hdl.desList, 1.2);
                     mf.curve.CalculateHeadings(ref mf.hdl.desList);

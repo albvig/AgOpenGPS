@@ -762,34 +762,78 @@ namespace AgOpenGPS
             //furstum culling needed??
             if (bnd.bndList.Count > 0)
             {
-                //draw 25 green in whole outer field polygon
-                GL.Color3((byte)0, (byte)25, (byte)0);
-                GL.Begin(PrimitiveType.Triangles);
-                for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
+                if (bnd.isHeadlandOn)
                 {
-                    GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[0].northing, 0);
-                    GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[1].northing, 0);
-                    GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[2].northing, 0);
-                }
-                GL.End();
-
-                //draw 0 green in inner boundary of field, aka black again
-                if (bnd.bndList.Count > 1)
-                {
-                    GL.Color3((byte)0, (byte)0, (byte)0);
+                    //draw 75 green in whole outer field polygon
+                    GL.Color3((byte)0, (byte)75, (byte)0);
                     GL.Begin(PrimitiveType.Triangles);
-                    for (int a = 1; a <  bnd.bndList.Count; a++)
+                    for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
                     {
-                        for (int i = 0; i < bnd.bndList[a].bndTriangleList.Count; i++)
-                        {
-                            GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[0].northing, 0);
-                            GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[1].northing, 0);
-                            GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[2].northing, 0);
-                        }
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[0].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[1].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[2].northing, 0);
                     }
                     GL.End();
-                }
 
+                    //draw 25 green in headland polygon
+                    GL.Color3((byte)0, (byte)25, (byte)0);
+                    GL.Begin(PrimitiveType.Triangles);
+                    for (int i = 0; i < bnd.bndList[0].hdLineTriangleList.Count; i++)
+                    {
+                        GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[0].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[0].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[1].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[1].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[2].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[2].northing, 0);
+                    }
+                    GL.End();
+
+                    //draw 0 green in inner boundary of field, aka black again
+                    if (bnd.bndList.Count > 1)
+                    {
+                        GL.Color3((byte)0, (byte)0, (byte)0);
+                        GL.Begin(PrimitiveType.Triangles);
+                        for (int a = 1; a < bnd.bndList.Count; a++)
+                        {
+                            for (int i = 0; i < bnd.bndList[a].bndTriangleList.Count; i++)
+                            {
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[0].northing, 0);
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[1].northing, 0);
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[2].northing, 0);
+                            }
+                        }
+                        GL.End();
+                    }
+
+                }
+                else
+                {
+                    //draw 25 green in whole outer field polygon
+                    GL.Color3((byte)0, (byte)25, (byte)0);
+                    GL.Begin(PrimitiveType.Triangles);
+                    for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
+                    {
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[0].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[1].northing, 0);
+                        GL.Vertex3(bnd.bndList[0].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[0].bndTriangleList[i].polygonPts[2].northing, 0);
+                    }
+                    GL.End();
+
+                    //draw 0 green in inner boundary of field, aka black again
+                    if (bnd.bndList.Count > 1)
+                    {
+                        GL.Color3((byte)0, (byte)0, (byte)0);
+                        GL.Begin(PrimitiveType.Triangles);
+                        for (int a = 1; a < bnd.bndList.Count; a++)
+                        {
+                            for (int i = 0; i < bnd.bndList[a].bndTriangleList.Count; i++)
+                            {
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[0].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[0].northing, 0);
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[1].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[1].northing, 0);
+                                GL.Vertex3(bnd.bndList[a].bndTriangleList[i].polygonPts[2].easting, bnd.bndList[a].bndTriangleList[i].polygonPts[2].northing, 0);
+                            }
+                        }
+                        GL.End();
+                    }
+                }
             }
 
             //patch color
