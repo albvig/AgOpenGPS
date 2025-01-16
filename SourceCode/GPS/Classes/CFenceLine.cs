@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace AgOpenGPS
 {
@@ -126,6 +127,11 @@ namespace AgOpenGPS
                     delta = 0;
                 }
             }
+
+            //Triangulate the boundary polygon
+            bndPolygon = new CPolygon(fenceLineEar.ToArray());
+            triangulatedList?.Clear();
+            triangulatedList = bndPolygon.Triangulate();
         }
 
         public void ReverseWinding()

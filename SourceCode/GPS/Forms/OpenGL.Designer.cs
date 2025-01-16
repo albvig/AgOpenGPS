@@ -759,16 +759,17 @@ namespace AgOpenGPS
             #region Draw to Back Buffer
 
             // back of field color
+            //furstum culling needed??
             if (bnd.bndList.Count > 0)
             {
                 //draw 25 green in whole outer field polygon
                 GL.Color3((byte)0, (byte)25, (byte)0);
                 GL.Begin(PrimitiveType.Triangles);
-                for (int i = 0; i < bnd.bndList[0].triangleList.Count; i++)
+                for (int i = 0; i < bnd.bndList[0].triangulatedList.Count; i++)
                 {
-                    GL.Vertex3(bnd.bndList[0].triangleList[i].polygonPts[0].easting, bnd.bndList[0].triangleList[i].polygonPts[0].northing, 0);
-                    GL.Vertex3(bnd.bndList[0].triangleList[i].polygonPts[1].easting, bnd.bndList[0].triangleList[i].polygonPts[1].northing, 0);
-                    GL.Vertex3(bnd.bndList[0].triangleList[i].polygonPts[2].easting, bnd.bndList[0].triangleList[i].polygonPts[2].northing, 0);
+                    GL.Vertex3(bnd.bndList[0].triangulatedList[i].polygonPts[0].easting, bnd.bndList[0].triangulatedList[i].polygonPts[0].northing, 0);
+                    GL.Vertex3(bnd.bndList[0].triangulatedList[i].polygonPts[1].easting, bnd.bndList[0].triangulatedList[i].polygonPts[1].northing, 0);
+                    GL.Vertex3(bnd.bndList[0].triangulatedList[i].polygonPts[2].easting, bnd.bndList[0].triangulatedList[i].polygonPts[2].northing, 0);
                 }
                 GL.End();
 
@@ -779,11 +780,11 @@ namespace AgOpenGPS
                     GL.Begin(PrimitiveType.Triangles);
                     for (int a = 1; a <  bnd.bndList.Count; a++)
                     {
-                        for (int i = 0; i < bnd.bndList[a].triangleList.Count; i++)
+                        for (int i = 0; i < bnd.bndList[a].triangulatedList.Count; i++)
                         {
-                            GL.Vertex3(bnd.bndList[a].triangleList[i].polygonPts[0].easting, bnd.bndList[a].triangleList[i].polygonPts[0].northing, 0);
-                            GL.Vertex3(bnd.bndList[a].triangleList[i].polygonPts[1].easting, bnd.bndList[a].triangleList[i].polygonPts[1].northing, 0);
-                            GL.Vertex3(bnd.bndList[a].triangleList[i].polygonPts[2].easting, bnd.bndList[a].triangleList[i].polygonPts[2].northing, 0);
+                            GL.Vertex3(bnd.bndList[a].triangulatedList[i].polygonPts[0].easting, bnd.bndList[a].triangulatedList[i].polygonPts[0].northing, 0);
+                            GL.Vertex3(bnd.bndList[a].triangulatedList[i].polygonPts[1].easting, bnd.bndList[a].triangulatedList[i].polygonPts[1].northing, 0);
+                            GL.Vertex3(bnd.bndList[a].triangulatedList[i].polygonPts[2].easting, bnd.bndList[a].triangulatedList[i].polygonPts[2].northing, 0);
                         }
                     }
                     GL.End();

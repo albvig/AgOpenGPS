@@ -10,7 +10,7 @@ namespace AgOpenGPS
         public List<vec2> fenceLineEar = new List<vec2>(128);
         public List<vec3> hdLine = new List<vec3>(128);
         public List<vec3> turnLine = new List<vec3>(128);
-        public List<Triangle> triangleList = new List<Triangle>(128);
+        public List<Triangle> triangulatedList = new List<Triangle>(128);
 
         public CPolygon bndPolygon = new CPolygon();
 
