@@ -506,6 +506,9 @@ namespace AgOpenGPS
                                     {
                                         mf.bnd.bndList[0].hdLine.Add(item);
                                     }
+
+                                    mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.bnd.bndList[0].hdLine.ToArray());
+                                    mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
                                 }
                             }
                         }
