@@ -292,5 +292,93 @@ namespace AgOpenGPS
             return true;
         }
 
+        public List<Triangle> TriangulateWithInnerPolygon(CPolygon innerPolygon)
+        {
+            // Ensure the outer polygon is oriented clockwise.
+            this.OrientPolygonClockwise();
+
+            // Ensure the inner polygon is oriented counter-clockwise.
+            if (innerPolygon.PolygonIsOrientedClockwise())
+            {
+                Array.Reverse(innerPolygon.polygonPts);
+            }
+
+            // Find a bridge between the outer and inner polygons.
+            int outerIndex = FindBridgePoint(this.polygonPts, innerPolygon.polygonPts);
+            int innerIndex = FindBridgePoint(innerPolygon.polygonPts, this.polygonPts);
+
+            // Stitch the polygons together to form a single polygon.
+            vec2[] stitchedPolygon = StitchPolygons(this.polygonPts, innerPolygon.polygonPts, outerIndex, innerIndex);
+
+            // Create a new polygon from the stitched vertices.
+            CPolygon stitched = new CPolygon(stitchedPolygon);
+
+            // Triangulate the stitched polygon.
+            List<Triangle> triL = stitched.Triangulate();
+            triL.Add(new Triangle(this.polygonPts[outerIndex], this.polygonPts[outerIndex + 1], innerPolygon.polygonPts[innerIndex]));
+            triL.Add(new Triangle(innerPolygon.polygonPts[innerIndex], this.polygonPts[outerIndex + 1], innerPolygon.polygonPts[innerIndex - 1]));
+
+            return triL;
+        }
+
+        private int FindBridgePoint(vec2[] poly1, vec2[] poly2)
+        {
+            // Example: Find the closest point for simplicity.
+            int bestIndex = 0;
+            int best = 0;
+            double minDistance = double.MaxValue;
+
+            for (int i = 0; i < poly1.Length; i++)
+            {
+                for (int j = 0; j < poly2.Length; j++)
+                {
+                    double distance = DistanceSquared(poly1[i], poly2[j]);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        bestIndex = i;
+                        best = j;
+                    }
+                }
+            }
+
+            return bestIndex;
+        }
+
+        private vec2[] StitchPolygons(vec2[] outer, vec2[] inner, int outerIndex, int innerIndex)
+        {
+            List<vec2> stitched = new List<vec2>();
+
+            // Add outer vertices up to the bridge point.
+            for (int i = 0; i <= outerIndex; i++)
+            {
+                stitched.Add(outer[i]);
+            }
+
+            // Add inner vertices, starting at the bridge point.
+            for (int i = innerIndex; i < inner.Length; i++)
+            {
+                stitched.Add(inner[i]);
+            }
+            for (int i = 0; i < innerIndex; i++)
+            {
+                stitched.Add(inner[i]);
+            }
+
+            // Complete the outer loop.
+            for (int i = outerIndex + 1; i < outer.Length; i++)
+            {
+                stitched.Add(outer[i]);
+            }
+
+            return stitched.ToArray();
+        }
+
+        private double DistanceSquared(vec2 p1, vec2 p2)
+        {
+            double dx = p1.easting - p2.easting;
+            double dy = p1.northing - p2.northing;
+            return dx * dx + dy * dy;
+        }
     }
 }

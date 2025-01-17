@@ -762,7 +762,7 @@ namespace AgOpenGPS
             //furstum culling needed??
             if (bnd.bndList.Count > 0)
             {
-                if (bnd.isHeadlandOn)
+                /*if (bnd.isHeadlandOn)
                 {
                     //draw 75 green in whole outer field polygon
                     GL.Color3((byte)0, (byte)75, (byte)0);
@@ -805,7 +805,7 @@ namespace AgOpenGPS
 
                 }
                 else
-                {
+                {*/
                     //draw 25 green in whole outer field polygon
                     GL.Color3((byte)0, (byte)25, (byte)0);
                     GL.Begin(PrimitiveType.Triangles);
@@ -833,7 +833,7 @@ namespace AgOpenGPS
                         }
                         GL.End();
                     }
-                }
+                //}
             }
 
             //patch color
@@ -888,9 +888,36 @@ namespace AgOpenGPS
                 }
             }
 
+            if (bnd.bndList.Count > 0 && bnd.isHeadlandOn)
+            {
+                //draw 75 green in headland polygon
+                GL.Color3((byte)0, (byte)75, (byte)0);
+                GL.Begin(PrimitiveType.Triangles);
+                for (int i = 0; i < bnd.bndList[0].hdLineTriangleList.Count; i++)
+                {
+                    GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[0].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[0].northing, 0);
+                    GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[1].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[1].northing, 0);
+                    GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[2].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[2].northing, 0);
+                }
+                GL.End();
+
+                GL.Color3((byte)0, (byte)0, (byte)250);
+                GL.PointSize(8.0f);
+                GL.Begin(PrimitiveType.Points);
+                for (int i = 0; i < bnd.bndList[0].hdLineTriangleList.Count; i++)
+                {
+                    if(i >= bnd.bndList[0].hdLineTriangleList.Count - 1) GL.Color3((byte)250, (byte)0, (byte)0);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        GL.Vertex3(bnd.bndList[0].hdLineTriangleList[i].polygonPts[j].easting, bnd.bndList[0].hdLineTriangleList[i].polygonPts[j].northing, 0);
+                    }
+                }
+                GL.End();
+            }
+
             //draw 245 green for the tram tracks
 
-            if (tool.isDisplayTramControl && tram.displayMode != 0 && (trk.idx > -1))
+            if (tool.isDisplayTramControl && tram.displayMode != 0)// && (trk.idx > -1))
             {
                 GL.Color3((byte)0, (byte)245, (byte)0);
                 GL.LineWidth(8);
@@ -919,7 +946,7 @@ namespace AgOpenGPS
             }
 
             //draw 240 green for boundary
-            if (bnd.bndList.Count > 0)
+            /*if (bnd.bndList.Count > 0)
             {
                 ////draw the bnd line 
                 if (bnd.bndList[0].fenceLine.Count > 3)
@@ -937,7 +964,7 @@ namespace AgOpenGPS
                     GL.Color3((byte)0, (byte)250, (byte)0);
                     bnd.bndList[0].hdLine.DrawPolygon();
                 }
-            }
+            }*/
 
             //finish it up - we need to read the ram of video card
             GL.Flush();
