@@ -944,9 +944,9 @@ namespace AgOpenGPS
 
                 GL.StencilFunc(StencilFunction.Always, 1, 0xFF); // Always pass, write stencil value 1
                 GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace); // Replace stencil value
-                GL.ColorMask(false, false, false, false); // Disable color writes
+                GL.ColorMask(true, true, true, true); // Disable color writes
 
-                //GL.Color3((byte)0, (byte)75, (byte)0);
+                GL.Color3((byte)0, (byte)75, (byte)0);
                 GL.Begin(PrimitiveType.Triangles);
                 for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
                 {
@@ -959,7 +959,7 @@ namespace AgOpenGPS
                 GL.StencilFunc(StencilFunction.Always, 2, 0xFF); // Always pass, write stencil value 2
                 GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace); // Replace stencil value
 
-                //GL.Color3((byte)0, (byte)25, (byte)0);
+                GL.Color3((byte)0, (byte)25, (byte)0);
                 GL.Begin(PrimitiveType.Triangles);
                 for (int i = 0; i < bnd.bndList[0].hdLineTriangleList.Count; i++)
                 {
@@ -972,16 +972,16 @@ namespace AgOpenGPS
                 GL.ColorMask(true, true, true, true); // Enable color writes
                 GL.StencilFunc(StencilFunction.Equal, 1, 0xFF); // Pass where stencil == 1
                 GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep); // Keep stencil values
-                GL.Color3(1.0f, 0.0f, 0.0f); // Set the color to fill (e.g., red)
+                GL.Color3(0.0f, 1.0f, 0.0f); // Set the color to fill (e.g., red)
                 GL.Begin(PrimitiveType.Quads);
                 // Bottom-left corner
-                GL.Vertex2(pivEminus, pivNminus);
+                GL.Vertex3(pivEminus, pivNminus, 0);
                 // Bottom-right corner
-                GL.Vertex2(pivEplus, pivNminus);
+                GL.Vertex3(pivEplus, pivNminus, 0);
                 // Top-right corner
-                GL.Vertex2(pivEplus, pivNplus - 50);
+                GL.Vertex3(pivEplus, pivNplus, 0);
                 // Top-left corner
-                GL.Vertex2(pivEminus, pivNplus - 50);
+                GL.Vertex3(pivEminus, pivNplus, 0);
 
                 GL.End();
 

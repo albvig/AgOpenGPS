@@ -98,7 +98,7 @@
             this.btnSection11Man = new System.Windows.Forms.Button();
             this.btnSection12Man = new System.Windows.Forms.Button();
             this.oglMain = new OpenTK.GLControl();
-            this.oglBack = new OpenTK.GLControl();
+            this.oglBack = new OpenTK.GLControl(graphicsMode);
             this.lblHz = new System.Windows.Forms.Label();
             this.statusStripLeft = new System.Windows.Forms.StatusStrip();
             this.distanceToolBtn = new System.Windows.Forms.ToolStripDropDownButton();
