@@ -629,6 +629,9 @@ namespace AgOpenGPS
                 vec3 ptEnd = new vec3(hdArr[hdArr.Length - 1].easting, hdArr[hdArr.Length - 1].northing, hdArr[hdArr.Length - 1].heading);
 
                 mf.bnd.bndList[0].hdLine.Add(ptEnd);
+
+                mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.bnd.bndList[0].hdLine.ToArray());
+                mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
             }
 
             mf.FileSaveHeadland();
@@ -794,7 +797,8 @@ namespace AgOpenGPS
                 }
             }
 
-            mf.FileSaveHeadland();
+            //isn´t really necessary since it is saved when closing form later, and for now it contains hundreds of points
+            //mf.FileSaveHeadland();
         }
 
         private void btnSlice_Click(object sender, EventArgs e)

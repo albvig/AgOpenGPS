@@ -1594,6 +1594,9 @@ namespace AgOpenGPS
                 btnHeadlandOnOff.Image = Properties.Resources.HeadlandOn;
                 btnHeadlandOnOff.Visible = true;
                 btnHydLift.Image = Properties.Resources.HydraulicLiftOff;
+
+                bnd.bndList[0].hdLinePolygon = new CPolygon(bnd.bndList[0].hdLine.ToArray());
+                bnd.bndList[0].hdLineTriangleList = bnd.bndList[0].hdLinePolygon.Triangulate();
             }
             else
             {
