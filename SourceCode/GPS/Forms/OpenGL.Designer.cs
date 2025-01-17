@@ -945,7 +945,7 @@ namespace AgOpenGPS
 
                 GL.StencilFunc(StencilFunction.Always, 1, 0xFF); // Always pass, write stencil value 1
                 GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Replace); // Replace stencil value
-                GL.ColorMask(true, true, true, true); // Disable color writes
+                GL.ColorMask(false, false, false, false); // Disable color writes
 
                 GL.Color3((byte)0, (byte)75, (byte)0);
                 GL.Begin(PrimitiveType.Triangles);
@@ -971,7 +971,7 @@ namespace AgOpenGPS
                 GL.End();
 
                 GL.ColorMask(true, true, true, true); // Enable color writes
-                GL.StencilFunc(StencilFunction.Never, 1, 0xFF); // Pass where stencil == 1
+                GL.StencilFunc(StencilFunction.Equal, 1, 0xFF); // Pass where stencil == 1
                 GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep); // Keep stencil values
                 GL.Color3(0.0f, 1.0f, 0.0f); // Set the color to fill (e.g., red)
                 GL.Begin(PrimitiveType.Quads);
@@ -985,10 +985,6 @@ namespace AgOpenGPS
                 GL.Vertex3(pivEminus, pivNplus, 0);
 
                 GL.End();
-
-                byte[] stencilValue = new byte[1];
-                GL.ReadPixels(0, 0, 1, 1, PixelFormat.StencilIndex, PixelType.UnsignedByte, stencilValue);
-                Debug.WriteLine("Stencil value at (100, 100): " + stencilValue[0]);
 
                 GL.Disable(EnableCap.StencilTest);
 

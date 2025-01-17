@@ -38,7 +38,7 @@ namespace AgOpenGPS
         #region // Class Props and instances
 
         //Adding a stencile buffer for oglBack
-        OpenTK.Graphics.GraphicsMode graphicsMode = new OpenTK.Graphics.GraphicsMode(32, 32, 0, 8);
+        OpenTK.Graphics.GraphicsMode graphicsMode = new OpenTK.Graphics.GraphicsMode(32, 24, 0, 8);
 
         //maximum sections available
         public const int MAXSECTIONS = 64;
