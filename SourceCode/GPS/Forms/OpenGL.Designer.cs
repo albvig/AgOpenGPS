@@ -594,7 +594,7 @@ namespace AgOpenGPS
                     if (leftMouseDownOnOpenGL) MakeFlagMark();
 
                     //5 hz sections
-                    if (bbCounter++ > 0)
+                    if (true)//bbCounter++ > 0)
                         bbCounter = 0;
 
                     //draw the section control window off screen buffer
@@ -1101,12 +1101,12 @@ namespace AgOpenGPS
                         if (redPixels[a] == 25)
                         {
                             bnd.isToolInHeadland = false;
-                            goto GetOutToolNotInHeadland;
+                            goto GetOutToolHeadland;
                         }
                     }
                 }
 
-            GetOutToolNotInHeadland: //goto
+            GetOutToolHeadland: //goto
                 //set hydraulics based on tool in headland or not
                 bnd.SetHydPosition();
             }
@@ -1196,7 +1196,7 @@ namespace AgOpenGPS
                 {
                     // Interpolate the slope for the current rowHeight
                     double t;
-                    if (endHeight - startHeight <= 0) t = 0; //will work kinda wack if you turn so fast that the left sections stads still
+                    if (endHeight - startHeight <= 0) t = 0; //if you turn that fast that the edge of the section is standing still
                     else t = (rowHeight - startHeight) / (endHeight - startHeight); // Interpolation factor
                     double mRow = mOff + t * (mOn - mOff); // Interpolated slope
 
@@ -1339,25 +1339,25 @@ namespace AgOpenGPS
                 //Mapping timers
                 if (section[j].sectionOnRequest && !section[j].isMappingOn && section[j].mappingOnTimer == 0)
                 {
-                    section[j].mappingOnTimer = (int)(tool.lookAheadOnSetting * (gpsHz / 2) - 1);
+                    section[j].mappingOnTimer = (int)(tool.lookAheadOnSetting * (gpsHz));// / 2) - 1);
                 }
                 else if (section[j].sectionOnRequest && section[j].isMappingOn && section[j].mappingOffTimer > 1)
                 {
                     section[j].mappingOffTimer = 0;
-                    section[j].mappingOnTimer = (int)(tool.lookAheadOnSetting * (gpsHz / 2) - 1);
+                    section[j].mappingOnTimer = (int)(tool.lookAheadOnSetting * (gpsHz));// / 2) - 1);
                 }
 
                 if (tool.lookAheadOffSetting > 0)
                 {
                     if (section[j].sectionOffRequest && section[j].isMappingOn && section[j].mappingOffTimer == 0)
                     {
-                        section[j].mappingOffTimer = (int)(tool.lookAheadOffSetting * (gpsHz / 2) + 4);
+                        section[j].mappingOffTimer = (int)(tool.lookAheadOffSetting * (gpsHz));// / 2) + 4);
                     }
                 }
                 else if (tool.turnOffDelay > 0)
                 {
                     if (section[j].sectionOffRequest && section[j].isMappingOn && section[j].mappingOffTimer == 0)
-                        section[j].mappingOffTimer = (int)(tool.turnOffDelay * gpsHz / 2);
+                        section[j].mappingOffTimer = (int)(tool.turnOffDelay * gpsHz);// / 2);
                 }
                 else
                 {
