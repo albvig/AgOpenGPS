@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Text;
 using System.Drawing;
 using AgLibrary.Logging;
+using System.Diagnostics;
 
 namespace AgOpenGPS
 {
@@ -953,7 +954,7 @@ namespace AgOpenGPS
             #endregion
 
             //determine where the tool is wrt to headland
-            if (bnd.isHeadlandOn) bnd.WhereAreToolCorners();
+            //if (bnd.isHeadlandOn) bnd.WhereAreToolCorners();
 
             //set the look ahead for hyd Lift in pixels per second
             vehicle.hydLiftLookAheadDistanceLeft = tool.farLeftSpeed * vehicle.hydLiftLookAheadTime * 10;
@@ -975,9 +976,9 @@ namespace AgOpenGPS
             if (tool.lookAheadDistanceOffPixelsRight > 160) tool.lookAheadDistanceOffPixelsRight = 160;
 
             //determine if section is in boundary and headland using the section left/right positions
-            bool isLeftIn = true, isRightIn = true;
+            //bool isLeftIn = true, isRightIn = true;
 
-            if (bnd.bndList.Count > 0)
+            /*if (bnd.bndList.Count > 0)
             {
                 for (int j = 0; j < tool.numOfSections; j++)
                 {
@@ -998,7 +999,7 @@ namespace AgOpenGPS
                         else section[j].isInBoundary = true;
                     }
                 }
-            }
+            }*/
 
             //determine farthest ahead lookahead - is the height of the readpixel line
             double rpHeight = 0;
@@ -1012,14 +1013,14 @@ namespace AgOpenGPS
             if (tool.lookAheadDistanceOnPixelsLeft > tool.lookAheadDistanceOnPixelsRight) rpOnHeight = tool.lookAheadDistanceOnPixelsLeft;
             else rpOnHeight = tool.lookAheadDistanceOnPixelsRight;
 
-            isHeadlandClose = false;
+            //isHeadlandClose = false;
 
             //clamp the height after looking way ahead, this is for switching off super section only
             rpOnHeight = Math.Abs(rpOnHeight);
             rpToolHeight = Math.Abs(rpToolHeight);
 
             //10 % min is required for overlap, otherwise it never would be on.
-            int pixLimit = (int)((double)(section[0].rpSectionWidth * rpOnHeight) / (double)(5.0));
+            //int pixLimit = (int)((double)(section[0].rpSectionWidth * rpOnHeight) / (double)(5.0));
 
             if ((rpOnHeight < rpToolHeight && bnd.isHeadlandOn && bnd.isSectionControlledByHeadland)) rpHeight = rpToolHeight + 2;
             else rpHeight = rpOnHeight + 2;
@@ -1028,43 +1029,66 @@ namespace AgOpenGPS
             if (rpHeight < 8) rpHeight = 8;
 
             //read the whole block of pixels up to max lookahead, one read only
+            GL.ReadPixels(tool.rpXPosition, 0, tool.rpWidth, (int)rpHeight, OpenTK.Graphics.OpenGL.PixelFormat.Red, PixelType.UnsignedByte, redPixels);
             GL.ReadPixels(tool.rpXPosition, 0, tool.rpWidth, (int)rpHeight, OpenTK.Graphics.OpenGL.PixelFormat.Green, PixelType.UnsignedByte, grnPixels);
+            GL.ReadPixels(tool.rpXPosition, 0, tool.rpWidth, (int)rpHeight, OpenTK.Graphics.OpenGL.PixelFormat.Blue, PixelType.UnsignedByte, bluPixels);
 
             //Paint to context for troubleshooting
             oglBack.BringToFront();
             oglBack.MakeCurrent();
             oglBack.SwapBuffers();
 
-            //determine if headland is in read pixel buffer left middle and right. 
-            int start = 0, end = 0, tagged = 0, totalPixel = 0;
+            int start = 0, end = 0, colored = 0, uncolored = 0;
 
-            //slope of the look ahead line
-            double mOn = 0, mOff = 0;
+            //determine if sections is in or out of boundary
+            for (int j = 0; j < tool.numOfSections; j++)
+            {
+                colored = uncolored = 0;
+                start = section[j].rpSectionPosition - section[0].rpSectionPosition;
+                end = section[j].rpSectionWidth - 1 + start;
 
-            double theta = mOn = (tool.lookAheadDistanceOnPixelsRight - tool.lookAheadDistanceOnPixelsLeft) / tool.rpWidth;
-            double deg = glm.toDegrees(Math.Atan(theta));
+                for (int pos = start; pos <= end; pos++)
+                {
+                    if (redPixels[pos] == 0) uncolored++;
+                    else colored++;
+                }
 
-            //tram and hydraulics
+                if (!tool.isSectionOffWhenOut)
+                {
+                    //merge the two sides into in or out
+                    if (colored > 0) section[j].isInBoundary = true;
+                    else section[j].isInBoundary = false;
+                }
+                else
+                {
+                    //merge the two sides into in or out
+                    if (uncolored > 0) section[j].isInBoundary = false;
+                    else section[j].isInBoundary = true;
+                }
+            }
+
+            //trams
             if (tram.displayMode > 0 && tool.width > vehicle.trackWidth)
             {
                 tram.controlByte = 0;
                 //1 pixels in is there a tram line?
                 if (tram.isOuter)
                 {
-                    if (grnPixels[tool.rpWidth - (int)(tram.halfWheelTrack * 10)] == 245 || tram.isRightManualOn) tram.controlByte += 1;
-                    if (grnPixels[(int)(tram.halfWheelTrack * 10)] == 245 || tram.isLeftManualOn) tram.controlByte += 2;
+                    if (bluPixels[tool.rpWidth - (int)(tram.halfWheelTrack * 10)] == 150 || tram.isRightManualOn) tram.controlByte += 1;
+                    if (bluPixels[(int)(tram.halfWheelTrack * 10)] == 150 || tram.isLeftManualOn) tram.controlByte += 2;
                 }
                 else
                 {
-                    if (grnPixels[tool.rpWidth / 2 + (int)(tram.halfWheelTrack * 10)] == 245 || tram.isRightManualOn) tram.controlByte += 1;
-                    if (grnPixels[tool.rpWidth / 2 - (int)(tram.halfWheelTrack * 10)] == 245 || tram.isLeftManualOn) tram.controlByte += 2;
+                    if (bluPixels[tool.rpWidth / 2 + (int)(tram.halfWheelTrack * 10)] == 150 || tram.isRightManualOn) tram.controlByte += 1;
+                    if (bluPixels[tool.rpWidth / 2 - (int)(tram.halfWheelTrack * 10)] == 150 || tram.isLeftManualOn) tram.controlByte += 2;
                 }
             }
             else tram.controlByte = 0;
 
-            //determine if in or out of headland, do hydraulics if on
+            //hydraulic lift
             if (bnd.isHeadlandOn)
             {
+                bnd.isToolInHeadland = true;
                 //calculate the slope
                 double m = (vehicle.hydLiftLookAheadDistanceRight - vehicle.hydLiftLookAheadDistanceLeft) / tool.rpWidth;
                 int height = 1;
@@ -1074,31 +1098,30 @@ namespace AgOpenGPS
                     height = (int)(vehicle.hydLiftLookAheadDistanceLeft + (m * pos)) - 1;
                     for (int a = pos; a < height * tool.rpWidth; a += tool.rpWidth)
                     {
-                        if (grnPixels[a] == 250)
+                        if (redPixels[a] == 25)
                         {
-                            isHeadlandClose = true;
-                            goto GetOutTool;
+                            bnd.isToolInHeadland = false;
+                            goto GetOutToolNotInHeadland;
                         }
                     }
                 }
 
-            GetOutTool: //goto
-
-                //is the tool completely in the headland or not
-                bnd.isToolInHeadland = bnd.isToolOuterPointsInHeadland && !isHeadlandClose;
-
-                //if we are in headland, turn off trams
-                if (bnd.isToolInHeadland) tram.controlByte = 0;
-
+            GetOutToolNotInHeadland: //goto
                 //set hydraulics based on tool in headland or not
                 bnd.SetHydPosition();
             }
 
             ///////////////////////////////////////////   Section control        ssssssssssssssssssssss
+            //slope of the look ahead line
+            double mOn = 0, mOff = 0;
 
-            int endHeight = 1, startHeight = 1;
+            //double theta = mOn = (tool.lookAheadDistanceOnPixelsRight - tool.lookAheadDistanceOnPixelsLeft) / tool.rpWidth;
+            //double deg = glm.toDegrees(Math.Atan(theta));
 
-            if (bnd.isHeadlandOn && bnd.isSectionControlledByHeadland) bnd.WhereAreToolLookOnPoints();
+            int endHeight = 1, startHeight = 1, checkedPixels = 0;
+            start = end = colored = uncolored = 0;
+
+            //if (bnd.isHeadlandOn && bnd.isSectionControlledByHeadland) bnd.WhereAreToolLookOnPoints();
 
             for (int j = 0; j < tool.numOfSections; j++)
             {
@@ -1139,23 +1162,77 @@ namespace AgOpenGPS
                 if (end >= tool.rpWidth)
                     end = tool.rpWidth - 1;
 
-                totalPixel = 1;
-                tagged = 0;
+                checkedPixels = 1;
+                colored = 0;
 
-                for (int pos = start; pos <= end; pos++)
+                /*for (int pos = start; pos <= end; pos++)
                 {
                     startHeight = (int)(tool.lookAheadDistanceOffPixelsLeft + (mOff * pos)) * tool.rpWidth + pos;
                     endHeight = (int)(tool.lookAheadDistanceOnPixelsLeft + (mOn * pos)) * tool.rpWidth + pos;
 
                     for (int a = startHeight; a <= endHeight; a += tool.rpWidth)
                     {
-                        totalPixel++;
-                        if (grnPixels[a] == 0) tagged++;
+                        if (bnd.isSectionControlledByHeadland)
+                        {
+                            if (grnPixels[a] == 127 || redPixels[a] == 75) colored++;
+                        } 
+                        else
+                        {
+                            if (grnPixels[a] == 127) colored++;
+                        }
+                        checkedPixels++;
+                    }
+                }*/
+
+                startHeight = (int)(tool.lookAheadDistanceOffPixelsLeft + mOff * start); // Red line height
+                endHeight = (int)(tool.lookAheadDistanceOnPixelsLeft + mOn * start);   // Green line height
+
+                
+                //startHeight = Math.Max(0, startHeight);
+                //endHeight = Math.Min(endHeight, grnPixels.Length / tool.rpWidth - 1);
+
+                // Start from the green line and move down to the red line
+                for (int rowHeight = endHeight; rowHeight >= startHeight; rowHeight--)
+                {
+                    // Interpolate the slope for the current rowHeight
+                    double t;
+                    if (endHeight - startHeight <= 0) t = 0; //will work kinda wack if you turn so fast that the left sections stads still
+                    else t = (rowHeight - startHeight) / (endHeight - startHeight); // Interpolation factor
+                    double mRow = mOff + t * (mOn - mOff); // Interpolated slope
+
+                    colored = checkedPixels = 0;
+
+                    // Iterate over the horizontal range for this row
+                    for (int pos = start; pos <= end; pos++)
+                    {
+                        int a = ((rowHeight + ((int)(mRow * (pos - start)))) * tool.rpWidth + pos); // Calculate the pixel index
+                        if (a < 0 || a >= grnPixels.Length)
+                        {
+                            Debug.Assert(false); // Safety check for index bounds
+                        }
+
+                        // Check pixel values
+                        if (bnd.isSectionControlledByHeadland)
+                        {
+                            if (grnPixels[a] == 127 || redPixels[a] != 25) colored++;
+                        }
+                        else
+                        {
+                            if (grnPixels[a] == 127) colored++;
+                        }
+                        checkedPixels++;
+                    }
+
+                    if ((colored * 100 / checkedPixels) < tool.minCoverage)
+                    {
+                        section[j].isSectionRequiredOn = true;
+                        break;
                     }
                 }
 
+
                 //determine if meeting minimum coverage
-                section[j].isSectionRequiredOn = ((tagged * 100) / totalPixel > (100 - tool.minCoverage));
+                //section[j].isSectionRequiredOn = ((colored * 100) / checkedPixels > (100 - tool.minCoverage));
 
                 //logic if in or out of boundaries or headland
                 if (bnd.bndList.Count > 0)
@@ -1173,7 +1250,7 @@ namespace AgOpenGPS
                     else
                     {
                         //is headland coming up
-                        if (bnd.isHeadlandOn && bnd.isSectionControlledByHeadland)
+                        /*if (bnd.isHeadlandOn && bnd.isSectionControlledByHeadland)
                         {
                             bool isHeadlandInLookOn = false;
 
@@ -1188,7 +1265,7 @@ namespace AgOpenGPS
                             if (end >= tool.rpWidth)
                                 end = tool.rpWidth - 1;
 
-                            tagged = 0;
+                            colored = 0;
 
                             for (int pos = start; pos <= end; pos++)
                             {
@@ -1222,7 +1299,7 @@ namespace AgOpenGPS
                                 section[j].sectionOffRequest = false;
                                 section[j].sectionOnRequest = true;
                             }
-                        }
+                        }*/
                     }
                 }
 
