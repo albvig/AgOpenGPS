@@ -609,7 +609,6 @@ namespace AgOpenGPS
                 }
 
                 double delta = 0;
-                bool lastPtAdded = false;
                 for (int i = 0; i < hdArr.Length; i++)
                 {
                     if (i == 0)
@@ -625,18 +624,14 @@ namespace AgOpenGPS
 
                         mf.bnd.bndList[0].hdLine.Add(pt);
                         delta = 0;
-                        if (i == hdArr.Length - 1) lastPtAdded = true;
                     }
                 }
-                if (!lastPtAdded)
-                {
-                    vec3 ptEnd = new vec3(hdArr[hdArr.Length - 1].easting, hdArr[hdArr.Length - 1].northing, hdArr[hdArr.Length - 1].heading);
-                    mf.bnd.bndList[0].hdLine.Add(ptEnd);
-                }
+                vec3 ptEnd = new vec3(hdArr[hdArr.Length - 1].easting, hdArr[hdArr.Length - 1].northing, hdArr[hdArr.Length - 1].heading);
+
+                mf.bnd.bndList[0].hdLine.Add(ptEnd);
 
                 mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.bnd.bndList[0].hdLine.ToArray());
-                mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].bndPolygon.TriangulateWithInnerPolygon(mf.bnd.bndList[0].hdLinePolygon);
-                //mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
+                mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
             }
 
             mf.FileSaveHeadland();
@@ -782,11 +777,11 @@ namespace AgOpenGPS
                 int cnt = mf.hdl.desList.Count;
                 if (cnt > 3)
                 {
-                    //pt3 = new vec3(mf.hdl.desList[0]);
-                    //mf.hdl.desList.Add(pt3);
+                    pt3 = new vec3(mf.hdl.desList[0]);
+                    mf.hdl.desList.Add(pt3);
 
-                    //mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.hdl.desList.ToArray());
-                    //mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
+                    mf.bnd.bndList[0].hdLinePolygon = new CPolygon(mf.hdl.desList.ToArray());
+                    mf.bnd.bndList[0].hdLineTriangleList = mf.bnd.bndList[0].hdLinePolygon.Triangulate();
 
                     //make sure point distance isn't too big 
                     mf.curve.MakePointMinimumSpacing(ref mf.hdl.desList, 1.2);
