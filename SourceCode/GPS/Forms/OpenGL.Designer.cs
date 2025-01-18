@@ -28,7 +28,9 @@ namespace AgOpenGPS
         byte[] rateGrn = new byte[1];
         byte[] rateBlu = new byte[1];
 
+        byte[] redPixels = new byte[150001];
         byte[] grnPixels = new byte[150001];
+        byte[] bluPixels = new byte[150001];
 
         private bool isHeadlandClose = false;
 
@@ -759,13 +761,14 @@ namespace AgOpenGPS
             #region Draw to Back Buffer
 
             // back of field color
+            GL.ColorMask(true, false , false, false); //Draw only in red
             //furstum culling needed??
             if (bnd.bndList.Count > 0)
             {
                 if (bnd.isHeadlandOn)
                 {
-                    //draw 75 green in whole outer field polygon
-                    GL.Color3((byte)0, (byte)75, (byte)0);
+                    //draw 75 red in whole outer field polygon
+                    GL.Color3((byte)75, (byte)0, (byte)0);
                     GL.Begin(PrimitiveType.Triangles);
                     for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
                     {
@@ -775,8 +778,8 @@ namespace AgOpenGPS
                     }
                     GL.End();
 
-                    //draw 25 green in headland polygon
-                    GL.Color3((byte)0, (byte)25, (byte)0);
+                    //draw 25 red in headland polygon
+                    GL.Color3((byte)25, (byte)0, (byte)0);
                     GL.Begin(PrimitiveType.Triangles);
                     for (int i = 0; i < bnd.bndList[0].hdLineTriangleList.Count; i++)
                     {
@@ -786,7 +789,9 @@ namespace AgOpenGPS
                     }
                     GL.End();
 
-                    //draw 0 green in inner boundary of field, aka black again
+                    //if we would have inner boundary headline draw them here
+
+                    //draw 0 red in inner boundary of field, aka black again
                     if (bnd.bndList.Count > 1)
                     {
                         GL.Color3((byte)0, (byte)0, (byte)0);
@@ -804,10 +809,10 @@ namespace AgOpenGPS
                     }
 
                 }
-                else
+                else //no headland excists
                 {
-                    //draw 25 green in whole outer field polygon
-                    GL.Color3((byte)0, (byte)25, (byte)0);
+                    //draw 25 red in whole outer field polygon
+                    GL.Color3((byte)25, (byte)0, (byte)0);
                     GL.Begin(PrimitiveType.Triangles);
                     for (int i = 0; i < bnd.bndList[0].bndTriangleList.Count; i++)
                     {
@@ -817,7 +822,7 @@ namespace AgOpenGPS
                     }
                     GL.End();
 
-                    //draw 0 green in inner boundary of field, aka black again
+                    //draw 0 red in inner boundary of field, aka black again
                     if (bnd.bndList.Count > 1)
                     {
                         GL.Color3((byte)0, (byte)0, (byte)0);
@@ -837,6 +842,7 @@ namespace AgOpenGPS
             }
 
             //patch color
+            GL.ColorMask(false, true, false, false); //Draw only in green
             GL.Color3((byte)0, (byte)127, (byte)0);
 
             //to draw or not the triangle patch
@@ -888,11 +894,12 @@ namespace AgOpenGPS
                 }
             }
 
-            //draw 245 green for the tram tracks
+            //tram tracks
+            GL.ColorMask(false, false, true, false); //Draw only in blue
+            GL.Color3((byte)0, (byte)0, (byte)150);
 
             if (tool.isDisplayTramControl && tram.displayMode != 0 && (trk.idx > -1))
             {
-                GL.Color3((byte)0, (byte)245, (byte)0);
                 GL.LineWidth(8);
 
                 if ((tram.displayMode == 1 || tram.displayMode == 2))
@@ -919,7 +926,7 @@ namespace AgOpenGPS
             }
 
             //draw 240 green for boundary
-            if (bnd.bndList.Count > 0)
+            /*if (bnd.bndList.Count > 0)
             {
                 ////draw the bnd line 
                 if (bnd.bndList[0].fenceLine.Count > 3)
@@ -937,9 +944,10 @@ namespace AgOpenGPS
                     GL.Color3((byte)0, (byte)250, (byte)0);
                     bnd.bndList[0].hdLine.DrawPolygon();
                 }
-            }
+            }*/
 
             //finish it up - we need to read the ram of video card
+            GL.ColorMask(true, true, true, true); //Draw only in green
             GL.Flush();
 
             #endregion
